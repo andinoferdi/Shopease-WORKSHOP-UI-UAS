@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Facebook,
@@ -8,11 +10,15 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isAdmin = pathname?.includes('/admin');
+  
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="container mx-auto px-4 py-12">
+    <footer className={`bg-gray-900 text-gray-300 w-full ${isAdmin ? 'md:pl-20 lg:pl-64' : ''}`}>
+      <div className="container mx-auto px-6 sm:px-8 md:px-10 py-12 max-w-7xl">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <h3 className="mb-4 text-lg font-bold text-white">ShopEase</h3>
@@ -149,7 +155,7 @@ export default function Footer() {
             <div className="text-sm">
               &copy; {new Date().getFullYear()} ShopEase. All rights reserved.
             </div>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-4 text-sm">
               <Link href="#" className="hover:text-teal-400">
                 Privacy Policy
               </Link>

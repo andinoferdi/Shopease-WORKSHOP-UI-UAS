@@ -7,9 +7,13 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-1 flex-col md:flex-row">
+    <div className="flex flex-1">
       <AdminSidebar />
-      <main className="flex-1 p-4 md:p-6">{children}</main>
+      <main className="flex-1 w-full p-4 md:ml-20 md:p-6 lg:ml-64">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+          {children}
+        </div>
+      </main>
     </div>
   );
 }

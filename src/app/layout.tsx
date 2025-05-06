@@ -33,10 +33,12 @@ export default function RootLayout({
         <AnimationProvider>
           <div className="flex min-h-screen flex-col">
             <Header />
-            <div className="flex flex-1 flex-col md:flex-row">
-              <main className="flex-1">{children}</main>
+            <div className="flex-1">
+              {children}
             </div>
-            <Footer />
+            <div className="md:ml-0">
+              <Footer />
+            </div>
           </div>
         </AnimationProvider>
       </body>

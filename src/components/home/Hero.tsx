@@ -9,21 +9,21 @@ export default function Hero() {
     <div className="relative overflow-hidden">
       <ParticlesBackground color={["#0F766E", "#0D9488", "#14B8A6"]} />
 
-      <div className="container mx-auto px-4 py-20 md:py-32">
+      <div className="container mx-auto px-4 py-12 md:py-16 max-w-6xl">
         <div className="grid items-center gap-8 md:grid-cols-2">
-          <div className="space-y-6" data-animate="fade-right">
-            <h1 className="text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl">
+          <div className="space-y-4" data-animate="fade-right">
+            <h1 className="text-3xl font-bold leading-tight text-gray-900 md:text-4xl lg:text-5xl">
               Discover <span className="neon-text">Amazing</span> Products for
               Your Lifestyle
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-base text-gray-600">
               Shop the latest trends and find everything you need with our
               curated collection of high-quality products.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 mt-4">
               <Link
                 href="/products"
-                className="neon-button bg-teal-700 text-white font-bold px-8 py-4 text-lg relative z-10 hover:bg-teal-600 transition-all duration-300"
+                className="neon-button bg-teal-700 text-white font-bold px-6 py-3 text-base relative z-10 hover:bg-teal-600 transition-all duration-300"
                 data-animate="zoom-in"
                 data-animate-delay="300"
                 style={{
@@ -45,7 +45,7 @@ export default function Hero() {
             </div>
           </div>
           <div
-            className="relative h-[400px] w-full overflow-hidden rounded-lg neon-box"
+            className="relative h-[320px] w-full overflow-hidden rounded-lg neon-box"
             data-animate="fade-left"
             data-animate-delay="200"
           >

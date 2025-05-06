@@ -50,7 +50,7 @@ export default function AdminSidebar() {
     <aside
       className={`${
         isCollapsed ? "w-20" : "w-64"
-      } fixed inset-y-0 left-0 z-40 hidden transform bg-gray-900 transition-all duration-300 md:block`}
+      } fixed inset-y-0 left-0 z-40 flex-shrink-0 bg-gray-900 transition-all duration-300 md:block`}
     >
       <div className="flex h-full flex-col">
         <div

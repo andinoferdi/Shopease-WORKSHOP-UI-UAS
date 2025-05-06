@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function AnimationProvider({
   children,
@@ -10,8 +10,17 @@ export default function AnimationProvider({
   children: React.ReactNode;
 }) {
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Set hydration state
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
+    // Only run after hydration to prevent mismatches
+    if (!isHydrated) return;
+
     // Create intersection observer
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -49,7 +58,7 @@ export default function AnimationProvider({
         observerRef.current.disconnect();
       }
     };
-  }, []);
+  }, [isHydrated]); // Only run after hydration is complete
 
   return <>{children}</>;
 }

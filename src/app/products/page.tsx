@@ -4,7 +4,7 @@ import { ProductSorter } from "@/components/products/ProductSorter";
 
 export default function ProductCatalog() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-10 py-8">
       <h1 className="mb-8 text-3xl font-bold text-gray-900">Product Catalog</h1>
 
       <div className="flex flex-col gap-6 lg:flex-row">

@@ -4,7 +4,7 @@ import { Search, Calendar, User } from "lucide-react";
 
 export default function ArticleArchive() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-10 py-8">
       <h1 className="mb-8 text-3xl font-bold text-gray-900">Blog Articles</h1>
 
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
