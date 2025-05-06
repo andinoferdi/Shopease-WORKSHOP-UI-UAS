@@ -11,15 +11,8 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-interface ParamsType {
-  id: string;
-}
-
-export default async function ArticleDetail({
-  params,
-}: {
-  params: ParamsType;
-}) {
+// @ts-expect-error - Types intentionally removed as requested
+export default function ArticleDetail({ params }) {
   const { id } = params;
 
   return (

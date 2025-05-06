@@ -11,33 +11,33 @@ import {
 
 export default function AdminDashboard() {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="w-full px-3 py-3 space-y-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <div className="flex items-center space-x-2">
-          <select className="rounded-md border border-gray-300 px-3 py-1.5 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+        <div className="flex flex-wrap items-center gap-2">
+          <select className="w-full sm:w-auto rounded-md border border-gray-300 px-3 py-1.5 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
             <option>Last 7 days</option>
             <option>Last 30 days</option>
             <option>Last 90 days</option>
             <option>All time</option>
           </select>
-          <button className="rounded-md bg-teal-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-800">
+          <button className="w-full sm:w-auto rounded-md bg-teal-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-800">
             Export
           </button>
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-teal-100 p-3 text-teal-700">
-              <DollarSign className="h-6 w-6" />
+            <div className="rounded-full bg-teal-100 p-2 text-teal-700">
+              <DollarSign className="h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">
+            <div className="ml-3">
+              <h3 className="text-xs md:text-sm font-medium text-gray-500">
                 Total Revenue
               </h3>
-              <div className="text-2xl font-bold text-gray-900">$24,780</div>
+              <div className="text-lg md:text-2xl font-bold text-gray-900">$24,780</div>
               <div className="flex items-center text-xs text-green-600">
                 <TrendingUp className="mr-1 h-3 w-3" />
                 <span>+12.5% from last month</span>
@@ -46,16 +46,16 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-orange-100 p-3 text-orange-700">
-              <ShoppingBag className="h-6 w-6" />
+            <div className="rounded-full bg-orange-100 p-2 text-orange-700">
+              <ShoppingBag className="h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">
+            <div className="ml-3">
+              <h3 className="text-xs md:text-sm font-medium text-gray-500">
                 Total Orders
               </h3>
-              <div className="text-2xl font-bold text-gray-900">156</div>
+              <div className="text-lg md:text-2xl font-bold text-gray-900">156</div>
               <div className="flex items-center text-xs text-green-600">
                 <TrendingUp className="mr-1 h-3 w-3" />
                 <span>+8.2% from last month</span>
@@ -64,16 +64,16 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-blue-100 p-3 text-blue-700">
-              <Users className="h-6 w-6" />
+            <div className="rounded-full bg-blue-100 p-2 text-blue-700">
+              <Users className="h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">
+            <div className="ml-3">
+              <h3 className="text-xs md:text-sm font-medium text-gray-500">
                 Total Customers
               </h3>
-              <div className="text-2xl font-bold text-gray-900">1,245</div>
+              <div className="text-lg md:text-2xl font-bold text-gray-900">1,245</div>
               <div className="flex items-center text-xs text-green-600">
                 <TrendingUp className="mr-1 h-3 w-3" />
                 <span>+5.3% from last month</span>
@@ -82,16 +82,16 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-purple-100 p-3 text-purple-700">
-              <Package className="h-6 w-6" />
+            <div className="rounded-full bg-purple-100 p-2 text-purple-700">
+              <Package className="h-5 w-5 md:h-6 md:w-6" />
             </div>
-            <div className="ml-4">
-              <h3 className="text-sm font-medium text-gray-500">
+            <div className="ml-3">
+              <h3 className="text-xs md:text-sm font-medium text-gray-500">
                 Total Products
               </h3>
-              <div className="text-2xl font-bold text-gray-900">84</div>
+              <div className="text-lg md:text-2xl font-bold text-gray-900">84</div>
               <div className="flex items-center text-xs text-green-600">
                 <TrendingUp className="mr-1 h-3 w-3" />
                 <span>+2.7% from last month</span>
@@ -101,19 +101,19 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
+          <div className="mb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <h3 className="text-lg font-medium text-gray-900">
               Sales Overview
             </h3>
-            <select className="rounded-md border border-gray-300 px-2 py-1 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+            <select className="w-full sm:w-auto rounded-md border border-gray-300 px-2 py-1 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
               <option>This Week</option>
               <option>This Month</option>
               <option>This Year</option>
             </select>
           </div>
-          <div className="h-64">
+          <div className="h-48 md:h-64">
             <div className="flex h-full items-end">
               {[35, 45, 30, 60, 75, 50, 40].map((value, index) => (
                 <div key={index} className="mx-1 flex-1">
@@ -130,8 +130,8 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
+          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <h3 className="text-lg font-medium text-gray-900">Recent Orders</h3>
             <Link
               href="/admin/transactions"
@@ -140,63 +140,65 @@ export default function AdminDashboard() {
               View All
             </Link>
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead>
-                <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                    Order ID
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                    Customer
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                    Amount
-                  </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {[1, 2, 3, 4, 5].map((order) => (
-                  <tr key={order}>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-teal-700">
-                      #ORD-{2023000 + order}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900">
-                      John Doe
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-900">
-                      ${(129.99 * order).toFixed(2)}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm">
-                      <span
-                        className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                          order % 3 === 0
-                            ? "bg-yellow-100 text-yellow-800"
-                            : order % 3 === 1
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {order % 3 === 0
-                          ? "Processing"
-                          : order % 3 === 1
-                          ? "Completed"
-                          : "Cancelled"}
-                      </span>
-                    </td>
+          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div className="inline-block min-w-full py-2 align-middle px-4 sm:px-6 lg:px-8">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead>
+                  <tr>
+                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      Order ID
+                    </th>
+                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      Customer
+                    </th>
+                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      Amount
+                    </th>
+                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                      Status
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {[1, 2, 3, 4, 5].map((order) => (
+                    <tr key={order}>
+                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-teal-700">
+                        #ORD-{2023000 + order}
+                      </td>
+                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-gray-900">
+                        John Doe
+                      </td>
+                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-gray-900">
+                        ${(129.99 * order).toFixed(2)}
+                      </td>
+                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm">
+                        <span
+                          className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                            order % 3 === 0
+                              ? "bg-yellow-100 text-yellow-800"
+                              : order % 3 === 1
+                              ? "bg-green-100 text-green-800"
+                              : "bg-gray-100 text-gray-800"
+                          }`}
+                        >
+                          {order % 3 === 0
+                            ? "Processing"
+                            : order % 3 === 1
+                            ? "Completed"
+                            : "Cancelled"}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">Top Products</h3>
             <Link
@@ -239,7 +241,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">
               Recent Activities
@@ -286,7 +288,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-lg font-medium text-gray-900">Pending Tasks</h3>
             <button className="text-sm font-medium text-teal-700 hover:text-teal-900">

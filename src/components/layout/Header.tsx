@@ -11,7 +11,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
       <div className="container mx-auto px-6 md:px-8 lg:px-12">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
+          <div className="flex w-1/4 items-center">
             <button
               className="mr-2 rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -28,7 +28,7 @@ export default function Header() {
             </Link>
           </div>
 
-          <nav className="hidden md:flex md:items-center md:space-x-6">
+          <nav className="hidden w-2/4 md:flex md:items-center md:justify-center md:space-x-10">
             <Link
               href="/"
               className="text-sm font-medium text-gray-700 hover:text-teal-700"
@@ -55,7 +55,7 @@ export default function Header() {
             </Link>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex w-1/4 items-center justify-end space-x-4">
             <div className="relative hidden md:block">
               <input
                 type="text"

@@ -40,7 +40,7 @@ export default function ArticleArchive() {
             key={article}
             className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
           >
-            <Link href={`/articles/${article}`} className="block">
+            <Link href={`/articles/view?id=${article}`} className="block">
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
                   src="/placeholder.svg?height=192&width=384"

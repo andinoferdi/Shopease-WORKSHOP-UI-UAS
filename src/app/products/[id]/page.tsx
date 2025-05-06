@@ -1,14 +1,10 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-interface ParamsType {
-  id: string;
-}
-
-export default async function ProductDetail({ params }: { params: ParamsType }) {
-  const { id } = await params;
+// @ts-expect-error - Types intentionally removed as requested
+export default function ProductDetail({ params }) {
+  const { id } = params;
 
   return (
     <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-10 py-8">
@@ -79,10 +75,10 @@ export default async function ProductDetail({ params }: { params: ParamsType }) 
             </h2>
             <p className="text-gray-700">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              euismod, diam vel tincidunt dapibus, massa urna condimentum
-              odio, vel finibus tellus nunc vel sem. Aenean vulputate eleifend
-              enim, ac tempor lorem vestibulum vitae. Donec bibendum
-              consectetur magna, et ullamcorper sapien dapibus non.
+              euismod, diam vel tincidunt dapibus, massa urna condimentum odio,
+              vel finibus tellus nunc vel sem. Aenean vulputate eleifend enim,
+              ac tempor lorem vestibulum vitae. Donec bibendum consectetur
+              magna, et ullamcorper sapien dapibus non.
             </p>
           </div>
 

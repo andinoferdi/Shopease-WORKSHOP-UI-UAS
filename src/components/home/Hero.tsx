@@ -55,10 +55,11 @@ export default function Hero() {
           </div>
           <div className="relative h-[320px] w-full overflow-hidden rounded-lg neon-box">
             <Image
-              src="/placeholder.svg?height=400&width=600"
+              src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2215&auto=format&fit=crop"
               alt="Hero image"
               fill
               className="object-cover"
+              unoptimized
             />
 
             {/* Animated overlay */}
