@@ -11,11 +11,15 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-interface PageParams {
+interface ParamsType {
   id: string;
 }
 
-export default function Page({ params }: { params: PageParams }) {
+export default async function ArticleDetail({
+  params,
+}: {
+  params: ParamsType;
+}) {
   const { id } = params;
 
   return (
