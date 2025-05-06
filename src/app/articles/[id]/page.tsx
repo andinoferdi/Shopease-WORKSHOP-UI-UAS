@@ -11,13 +11,13 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-interface ParamsType {
+interface PageParams {
   id: string;
 }
 
-export default async function ArticleDetail({ params }: { params: ParamsType }) {
-  const { id } = await params;
-  
+export default function Page({ params }: { params: PageParams }) {
+  const { id } = params;
+
   return (
     <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-10 py-8">
       <Link
@@ -74,11 +74,11 @@ export default async function ArticleDetail({ params }: { params: ParamsType }) 
         <div className="prose prose-lg max-w-none">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-            enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur.
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur.
           </p>
 
           <p>
@@ -94,22 +94,19 @@ export default async function ArticleDetail({ params }: { params: ParamsType }) 
 
           <p>
             Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-            consectetur, adipisci velit, sed quia non numquam eius modi
-            tempora incidunt ut labore et dolore magnam aliquam quaerat
-            voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem
-            ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-            consequatur?
+            consectetur, adipisci velit, sed quia non numquam eius modi tempora
+            incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
+            enim ad minima veniam, quis nostrum exercitationem ullam corporis
+            suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
           </p>
 
           <ul>
             <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
             <li>
-              Sed do eiusmod tempor incididunt ut labore et dolore magna
-              aliqua
+              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
             </li>
             <li>
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco
-              laboris
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
             </li>
             <li>
               Duis aute irure dolor in reprehenderit in voluptate velit esse
@@ -127,16 +124,15 @@ export default async function ArticleDetail({ params }: { params: ParamsType }) 
 
           <blockquote>
             &ldquo;The future of e-commerce is not just about selling products
-            online, but creating immersive and personalized shopping
-            experiences that bridge the gap between digital and physical
-            retail.&rdquo;
+            online, but creating immersive and personalized shopping experiences
+            that bridge the gap between digital and physical retail.&rdquo;
           </blockquote>
 
           <p>
-            Et harum quidem rerum facilis est et expedita distinctio. Nam
-            libero tempore, cum soluta nobis est eligendi optio cumque nihil
-            impedit quo minus id quod maxime placeat facere possimus, omnis
-            voluptas assumenda est, omnis dolor repellendus.
+            Et harum quidem rerum facilis est et expedita distinctio. Nam libero
+            tempore, cum soluta nobis est eligendi optio cumque nihil impedit
+            quo minus id quod maxime placeat facere possimus, omnis voluptas
+            assumenda est, omnis dolor repellendus.
           </p>
         </div>
 
@@ -144,17 +140,15 @@ export default async function ArticleDetail({ params }: { params: ParamsType }) 
           <div className="flex items-center space-x-2">
             <span className="text-sm font-medium text-gray-700">Tags:</span>
             <div className="flex flex-wrap gap-2">
-              {["E-commerce", "Technology", "Retail", "Digital"].map(
-                (tag) => (
-                  <Link
-                    key={tag}
-                    href="#"
-                    className="rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-700 hover:bg-gray-200"
-                  >
-                    {tag}
-                  </Link>
-                )
-              )}
+              {["E-commerce", "Technology", "Retail", "Digital"].map((tag) => (
+                <Link
+                  key={tag}
+                  href="#"
+                  className="rounded-md bg-gray-100 px-3 py-1 text-xs text-gray-700 hover:bg-gray-200"
+                >
+                  {tag}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -178,9 +172,7 @@ export default async function ArticleDetail({ params }: { params: ParamsType }) 
         </div>
 
         <div className="mt-12">
-          <h3 className="mb-6 text-xl font-bold text-gray-900">
-            Comments (5)
-          </h3>
+          <h3 className="mb-6 text-xl font-bold text-gray-900">Comments (5)</h3>
 
           <div className="space-y-6">
             {[1, 2, 3].map((comment) => (
@@ -206,8 +198,8 @@ export default async function ArticleDetail({ params }: { params: ParamsType }) 
                     </div>
                     <p className="mt-2 text-gray-600">
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sed do eiusmod tempor incididunt ut labore et dolore
-                      magna aliqua.
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
                     </p>
                     <button className="mt-2 text-sm font-medium text-teal-700 hover:text-teal-900">
                       Reply

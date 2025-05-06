@@ -1,16 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import type React from "react";
+
+import { useState, useRef } from "react";
 import { Send, CheckCircle } from "lucide-react";
+import ScrollReveal from "../effects/ScrollReveal";
+import FloatingElements from "../effects/FloatingElements";
 
 export default function Newsletter() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
     setIsSubmitted(true);
     setTimeout(() => setIsSubmitted(false), 3000);
+
+    // Reset form
+    if (formRef.current) {
+      formRef.current.reset();
+    }
   };
 
   return (
@@ -20,15 +30,11 @@ export default function Newsletter() {
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=200&width=200')] bg-center opacity-5"></div>
       </div>
 
-      {/* Animated glow effects */}
-      <div className="absolute -left-20 -top-20 h-[500px] w-[500px] rounded-full bg-teal-300 opacity-20 blur-[100px] animate-pulse"></div>
-      <div
-        className="absolute -bottom-20 -right-20 h-[500px] w-[500px] rounded-full bg-emerald-300 opacity-20 blur-[100px] animate-pulse"
-        style={{ animationDelay: "1s" }}
-      ></div>
+      {/* Floating elements */}
+      <FloatingElements count={15} maxSize={100} />
 
       <div className="container relative mx-auto px-4 text-center">
-        <div className="animate-fade-up">
+        <ScrollReveal>
           <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl lg:text-5xl tracking-tight drop-shadow-[0_0_10px_rgba(20,184,166,0.5)]">
             Subscribe to Our Newsletter
           </h2>
@@ -36,7 +42,9 @@ export default function Newsletter() {
             Stay updated with our latest products, exclusive offers, and helpful
             shopping tips.
           </p>
+        </ScrollReveal>
 
+        <ScrollReveal delay={200}>
           <div className="mx-auto max-w-xl">
             <div className="relative rounded-2xl bg-gray-900/90 backdrop-blur-sm p-8 shadow-[0_0_15px_rgba(20,184,166,0.3)] border border-teal-500/30">
               {isSubmitted ? (
@@ -50,7 +58,11 @@ export default function Newsletter() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form
+                  ref={formRef}
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
                   <div className="group relative">
                     <input
                       type="text"
@@ -99,12 +111,12 @@ export default function Newsletter() {
               )}
             </div>
           </div>
+        </ScrollReveal>
 
-          <p className="mt-6 text-sm text-white/80">
-            By subscribing, you agree to our Privacy Policy and consent to
-            receive updates from our company.
-          </p>
-        </div>
+        <p className="mt-6 text-sm text-white/80">
+          By subscribing, you agree to our Privacy Policy and consent to receive
+          updates from our company.
+        </p>
       </div>
     </div>
   );

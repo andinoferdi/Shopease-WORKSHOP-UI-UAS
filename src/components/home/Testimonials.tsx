@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { Star } from "lucide-react";
 import ParticlesBackground from "../effects/ParticlesBackground";
+import ScrollReveal from "../effects/ScrollReveal";
+import FloatingElements from "../effects/FloatingElements";
 
 export default function Testimonials() {
   const testimonials = [
@@ -39,53 +41,56 @@ export default function Testimonials() {
   return (
     <div className="relative py-16">
       <ParticlesBackground color={["#0D9488", "#14B8A6", "#2DD4BF"]} />
+      <FloatingElements count={10} />
 
       <div className="container mx-auto px-4 relative z-10">
-        <h2
-          className="mb-12 text-center text-2xl font-bold text-gray-900 md:text-3xl neon-text"
-          data-animate="fade-up"
-        >
-          What Our Customers Say
-        </h2>
+        <ScrollReveal>
+          <h2 className="mb-12 text-center text-2xl font-bold text-gray-900 md:text-3xl neon-text">
+            What Our Customers Say
+          </h2>
+        </ScrollReveal>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {testimonials.map((testimonial) => (
-            <div
+          {testimonials.map((testimonial, index) => (
+            <ScrollReveal
               key={testimonial.id}
-              className="rounded-lg bg-white/90 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
-              data-animate="fade-up"
-              data-animate-delay={testimonial.delay}
+              delay={index * 150}
+              direction={index % 2 === 0 ? "up" : "down"}
             >
-              <div className="mb-4 flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-5 w-5 ${
-                      i < testimonial.rating
-                        ? "fill-orange-400 text-orange-400"
-                        : "fill-gray-200 text-gray-200"
-                    }`}
-                  />
-                ))}
-              </div>
-              <p className="mb-6 text-gray-600">&ldquo;{testimonial.content}&rdquo;</p>
-              <div className="flex items-center">
-                <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-teal-500">
-                  <Image
-                    src={testimonial.image || "/placeholder.svg"}
-                    alt={testimonial.name}
-                    fill
-                    className="object-cover"
-                  />
+              <div className="rounded-lg bg-white/90 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                <div className="mb-4 flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-5 w-5 ${
+                        i < testimonial.rating
+                          ? "fill-orange-400 text-orange-400"
+                          : "fill-gray-200 text-gray-200"
+                      }`}
+                    />
+                  ))}
                 </div>
-                <div className="ml-4">
-                  <h4 className="font-medium text-gray-900">
-                    {testimonial.name}
-                  </h4>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
+                <p className="mb-6 text-gray-600">
+                  &ldquo;{testimonial.content}&rdquo;
+                </p>
+                <div className="flex items-center">
+                  <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-teal-500">
+                    <Image
+                      src={testimonial.image || "/placeholder.svg"}
+                      alt={testimonial.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="ml-4">
+                    <h4 className="font-medium text-gray-900">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

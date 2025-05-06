@@ -201,3 +201,119 @@ html {
   font-style: italic;
   color: #4b5563;
 }
+
+/* Float animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translate(-50%, -50%);
+  }
+  50% {
+    transform: translateY(-10px) translate(-50%, -50%);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Cursor effects */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(15, 118, 110, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+  z-index: 9999;
+  mix-blend-mode: screen;
+}
+
+/* Magnetic effect */
+.magnetic-item {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3D card effect */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.card-3d-content {
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+/* Parallax effect */
+.parallax-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+/* Ensure animations work with transform in FloatingElements */
+.floating-element {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Preload critical animations */
+body::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -1;
+  
+  /* Preload animations */
+  animation: float 0s 10s;
+}
+
+/* Prevent initial flash */
+.no-flash {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Force content to be visible during initial load */
+html.js-loading {
+  visibility: visible !important;
+}
+
+/* Ensure body is always visible */
+body {
+  visibility: visible !important;
+  opacity: 1 !important;
+  min-height: 100vh;
+}
+
+/* Fix for animations causing blank screens */
+* {
+  backface-visibility: hidden;
+}
+
+/* Add fallback visibility for animation elements */
+[data-animate] {
+  will-change: transform, opacity;
+  opacity: 1 !important; /* Force initial visibility */
+}
+
+/* Ensure floating elements are visible */
+.floating-element {
+  opacity: 0.2; /* Ensure at least some visibility */
+}
