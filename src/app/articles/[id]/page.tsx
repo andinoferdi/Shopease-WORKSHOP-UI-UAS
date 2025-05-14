@@ -1,19 +1,52 @@
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowLeft, Clock, Calendar } from "lucide-react"
-import { getArticleById, getRelatedArticles } from "@/lib/data/articles"
-import { notFound } from "next/navigation"
-import { format } from "date-fns"
+// app/articles/[id]/page.tsx
 
-export default function ArticleDetail({ params }: { params: { id: string } }) {
-  const article = getArticleById(params.id)
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, Clock, Calendar } from "lucide-react";
+import {
+  getArticleById,
+  getRelatedArticles,
+  getArticles,
+} from "@/lib/data/articles";
+import { notFound } from "next/navigation";
+import { format } from "date-fns";
+import type { Article as BaseArticle } from "@/types";
+
+// Optional: Pre-render articles at build time
+export async function generateStaticParams() {
+  const articles = getArticles();
+  return articles.map((article: BaseArticle) => ({ id: article.id }));
+}
+
+// Extended article interface that matches the actual data structure
+interface ExtendedArticle extends Omit<BaseArticle, "author" | "image"> {
+  author: {
+    name: string;
+    avatar: string;
+  };
+  coverImage: string;
+  publishedAt: string;
+  readTime: number;
+}
+
+export default async function ArticleDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const article = getArticleById(id) as unknown as ExtendedArticle;
 
   if (!article) {
-    notFound()
+    notFound();
   }
 
-  const relatedArticles = getRelatedArticles(params.id, 3)
-  const publishDate = new Date(article.publishedAt)
+  const relatedArticles = getRelatedArticles(
+    id,
+    3
+  ) as unknown as ExtendedArticle[];
+  const publishDate = new Date(article.publishedAt);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12">
@@ -30,7 +63,9 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
           <span className="mb-2 inline-block rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-800">
             {article.category}
           </span>
-          <h1 className="mb-4 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">{article.title}</h1>
+          <h1 className="mb-4 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
+            {article.title}
+          </h1>
           <div className="flex items-center text-sm text-gray-600">
             <div className="mr-6 flex items-center">
               <div className="relative mr-3 h-8 w-8 overflow-hidden rounded-full">
@@ -55,10 +90,18 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
         </div>
 
         <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-lg">
-          <Image src={article.coverImage || "/placeholder.svg"} alt={article.title} fill className="object-cover" />
+          <Image
+            src={article.coverImage || "/placeholder.svg"}
+            alt={article.title}
+            fill
+            className="object-cover"
+          />
         </div>
 
-        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
+        <div
+          className="prose prose-lg max-w-none"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
 
         <div className="mt-8 flex flex-wrap gap-2">
           {article.tags.map((tag) => (
@@ -91,11 +134,15 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
                   />
                 </div>
                 <div className="p-4">
-                  <span className="mb-1 inline-block text-xs font-medium text-teal-700">{relatedArticle.category}</span>
+                  <span className="mb-1 inline-block text-xs font-medium text-teal-700">
+                    {relatedArticle.category}
+                  </span>
                   <h3 className="mb-2 text-lg font-semibold text-gray-900 group-hover:text-teal-700">
                     {relatedArticle.title}
                   </h3>
-                  <p className="text-sm text-gray-600">{relatedArticle.excerpt}</p>
+                  <p className="text-sm text-gray-600">
+                    {relatedArticle.excerpt}
+                  </p>
                 </div>
               </Link>
             ))}
@@ -103,5 +150,5 @@ export default function ArticleDetail({ params }: { params: { id: string } }) {
         </div>
       )}
     </div>
-  )
+  );
 }
