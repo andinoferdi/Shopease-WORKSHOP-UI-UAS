@@ -1,8 +1,8 @@
-import Image from "next/image";
-import { Star } from "lucide-react";
-import ParticlesBackground from "../effects/ParticlesBackground";
-import ScrollReveal from "../effects/ScrollReveal";
-import FloatingElements from "../effects/FloatingElements";
+import Image from "next/image"
+import { Star } from "lucide-react"
+import ParticlesBackground from "../effects/ParticlesBackground"
+import ScrollReveal from "../effects/ScrollReveal"
+import FloatingElements from "../effects/FloatingElements"
 
 export default function Testimonials() {
   const testimonials = [
@@ -36,7 +36,7 @@ export default function Testimonials() {
       image: "/placeholder.svg?height=60&width=60",
       delay: 300,
     },
-  ];
+  ]
 
   return (
     <div className="relative py-16">
@@ -52,27 +52,19 @@ export default function Testimonials() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
-            <ScrollReveal
-              key={testimonial.id}
-              delay={index * 150}
-              direction={index % 2 === 0 ? "up" : "down"}
-            >
+            <ScrollReveal key={testimonial.id} delay={index * 150} direction={index % 2 === 0 ? "up" : "down"}>
               <div className="rounded-lg bg-white/90 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                 <div className="mb-4 flex">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
                       className={`h-5 w-5 ${
-                        i < testimonial.rating
-                          ? "fill-orange-400 text-orange-400"
-                          : "fill-gray-200 text-gray-200"
+                        i < testimonial.rating ? "fill-orange-400 text-orange-400" : "fill-gray-200 text-gray-200"
                       }`}
                     />
                   ))}
                 </div>
-                <p className="mb-6 text-gray-600">
-                  &ldquo;{testimonial.content}&rdquo;
-                </p>
+                <p className="mb-6 text-gray-600">&ldquo;{testimonial.content}&rdquo;</p>
                 <div className="flex items-center">
                   <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-teal-500">
                     <Image
@@ -83,9 +75,7 @@ export default function Testimonials() {
                     />
                   </div>
                   <div className="ml-4">
-                    <h4 className="font-medium text-gray-900">
-                      {testimonial.name}
-                    </h4>
+                    <h4 className="font-medium text-gray-900">{testimonial.name}</h4>
                     <p className="text-sm text-gray-500">{testimonial.role}</p>
                   </div>
                 </div>
@@ -95,5 +85,5 @@ export default function Testimonials() {
         </div>
       </div>
     </div>
-  );
+  )
 }

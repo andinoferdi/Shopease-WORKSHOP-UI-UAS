@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react"
 
 interface TextRevealProps {
-  text: string;
-  className?: string;
-  delay?: number;
-  duration?: number;
-  once?: boolean;
+  text: string
+  className?: string
+  delay?: number
+  duration?: number
+  once?: boolean
 }
 
 export default function TextReveal({
@@ -17,44 +17,44 @@ export default function TextReveal({
   duration = 1500,
   once = false,
 }: TextRevealProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const textRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const textRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
-            setIsVisible(true);
-          }, delay);
+            setIsVisible(true)
+          }, delay)
 
           if (once && entry.isIntersecting) {
-            observer.unobserve(entry.target);
+            observer.unobserve(entry.target)
           }
         } else if (!once) {
-          setIsVisible(false);
+          setIsVisible(false)
         }
       },
       {
         threshold: 0.2,
-      }
-    );
+      },
+    )
 
-    const currentRef = textRef.current;
+    const currentRef = textRef.current
 
     if (currentRef) {
-      observer.observe(currentRef);
+      observer.observe(currentRef)
     }
 
     return () => {
       if (currentRef) {
-        observer.unobserve(currentRef);
+        observer.unobserve(currentRef)
       }
-    };
-  }, [delay, once]);
+    }
+  }, [delay, once])
 
   // Split text into individual characters
-  const characters = text.split("");
+  const characters = text.split("")
 
   return (
     <div ref={textRef} className={`overflow-hidden ${className}`}>
@@ -65,9 +65,7 @@ export default function TextReveal({
             className="inline-block opacity-0 transform translate-y-full"
             style={{
               animation: isVisible
-                ? `reveal ${duration}ms ${
-                    index * 30
-                  }ms forwards cubic-bezier(0.19, 1, 0.22, 1)`
+                ? `reveal ${duration}ms ${index * 30}ms forwards cubic-bezier(0.19, 1, 0.22, 1)`
                 : "none",
             }}
           >
@@ -89,5 +87,5 @@ export default function TextReveal({
         }
       `}</style>
     </div>
-  );
+  )
 }

@@ -1,359 +1,292 @@
-import Link from "next/link";
-import {
-  ShoppingBag,
-  Users,
-  DollarSign,
-  TrendingUp,
-  Package,
-  Clock,
-  AlertCircle,
-} from "lucide-react";
+"use client"
+
+import { useState, useEffect } from "react"
+import { getDashboardStats } from "@/lib/data/stats"
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
+import { ArrowUp, ArrowDown, DollarSign, ShoppingBag, Users, Package } from "lucide-react"
+import Link from "next/link"
+
+// Define types for dashboard data
+interface OrderAddress {
+  name: string
+}
+
+interface Order {
+  id: string
+  shippingAddress: OrderAddress
+  createdAt: string
+  total: number
+  status: 'delivered' | 'shipped' | 'processing' | 'cancelled' | string
+}
+
+interface MonthlyRevenue {
+  month: string
+  revenue: number
+}
+
+interface CategorySales {
+  category: string
+  sales: number
+}
+
+interface DashboardStats {
+  totalSales: number
+  totalOrders: number
+  totalCustomers: number
+  totalProducts: number
+  revenueByMonth: MonthlyRevenue[]
+  salesByCategory: CategorySales[]
+  recentOrders: Order[]
+}
 
 export default function AdminDashboard() {
+  const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const dashboardStats = getDashboardStats()
+        setStats(dashboardStats)
+      } catch (error) {
+        console.error("Error fetching dashboard stats:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchStats()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-500 border-t-transparent"></div>
+      </div>
+    )
+  }
+
+  if (!stats) {
+    return (
+      <div className="p-6">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+          Failed to load dashboard statistics. Please try again later.
+        </div>
+      </div>
+    )
+  }
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
+
   return (
-    <div className="w-full px-3 py-3 space-y-4">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <div className="flex flex-wrap items-center gap-2">
-          <select className="w-full sm:w-auto rounded-md border border-gray-300 px-3 py-1.5 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
-            <option>Last 7 days</option>
-            <option>Last 30 days</option>
-            <option>Last 90 days</option>
-            <option>All time</option>
-          </select>
-          <button className="w-full sm:w-auto rounded-md bg-teal-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-800">
-            Export
-          </button>
-        </div>
-      </div>
+    <div className="p-6">
+      <h1 className="mb-6 text-2xl font-bold">Dashboard</h1>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+      {/* Stats Cards */}
+      <div className="mb-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-teal-100 p-2 text-teal-700">
-              <DollarSign className="h-5 w-5 md:h-6 md:w-6" />
+            <div className="mr-4 rounded-full bg-teal-100 p-3">
+              <DollarSign className="h-6 w-6 text-teal-700" />
             </div>
-            <div className="ml-3">
-              <h3 className="text-xs md:text-sm font-medium text-gray-500">
-                Total Revenue
-              </h3>
-              <div className="text-lg md:text-2xl font-bold text-gray-900">$24,780</div>
-              <div className="flex items-center text-xs text-green-600">
-                <TrendingUp className="mr-1 h-3 w-3" />
-                <span>+12.5% from last month</span>
-              </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Sales</p>
+              <h3 className="text-2xl font-bold">${stats.totalSales.toFixed(2)}</h3>
             </div>
+          </div>
+          <div className="mt-4 flex items-center text-sm">
+            <span className="flex items-center text-green-600">
+              <ArrowUp className="mr-1 h-4 w-4" />
+              12.5%
+            </span>
+            <span className="ml-2 text-gray-500">from last month</span>
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-orange-100 p-2 text-orange-700">
-              <ShoppingBag className="h-5 w-5 md:h-6 md:w-6" />
+            <div className="mr-4 rounded-full bg-blue-100 p-3">
+              <ShoppingBag className="h-6 w-6 text-blue-700" />
             </div>
-            <div className="ml-3">
-              <h3 className="text-xs md:text-sm font-medium text-gray-500">
-                Total Orders
-              </h3>
-              <div className="text-lg md:text-2xl font-bold text-gray-900">156</div>
-              <div className="flex items-center text-xs text-green-600">
-                <TrendingUp className="mr-1 h-3 w-3" />
-                <span>+8.2% from last month</span>
-              </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Orders</p>
+              <h3 className="text-2xl font-bold">{stats.totalOrders}</h3>
             </div>
+          </div>
+          <div className="mt-4 flex items-center text-sm">
+            <span className="flex items-center text-green-600">
+              <ArrowUp className="mr-1 h-4 w-4" />
+              8.2%
+            </span>
+            <span className="ml-2 text-gray-500">from last month</span>
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-blue-100 p-2 text-blue-700">
-              <Users className="h-5 w-5 md:h-6 md:w-6" />
+            <div className="mr-4 rounded-full bg-purple-100 p-3">
+              <Users className="h-6 w-6 text-purple-700" />
             </div>
-            <div className="ml-3">
-              <h3 className="text-xs md:text-sm font-medium text-gray-500">
-                Total Customers
-              </h3>
-              <div className="text-lg md:text-2xl font-bold text-gray-900">1,245</div>
-              <div className="flex items-center text-xs text-green-600">
-                <TrendingUp className="mr-1 h-3 w-3" />
-                <span>+5.3% from last month</span>
-              </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Customers</p>
+              <h3 className="text-2xl font-bold">{stats.totalCustomers}</h3>
             </div>
+          </div>
+          <div className="mt-4 flex items-center text-sm">
+            <span className="flex items-center text-green-600">
+              <ArrowUp className="mr-1 h-4 w-4" />
+              5.3%
+            </span>
+            <span className="ml-2 text-gray-500">from last month</span>
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <div className="flex items-center">
-            <div className="rounded-full bg-purple-100 p-2 text-purple-700">
-              <Package className="h-5 w-5 md:h-6 md:w-6" />
+            <div className="mr-4 rounded-full bg-amber-100 p-3">
+              <Package className="h-6 w-6 text-amber-700" />
             </div>
-            <div className="ml-3">
-              <h3 className="text-xs md:text-sm font-medium text-gray-500">
-                Total Products
-              </h3>
-              <div className="text-lg md:text-2xl font-bold text-gray-900">84</div>
-              <div className="flex items-center text-xs text-green-600">
-                <TrendingUp className="mr-1 h-3 w-3" />
-                <span>+2.7% from last month</span>
-              </div>
+            <div>
+              <p className="text-sm font-medium text-gray-500">Total Products</p>
+              <h3 className="text-2xl font-bold">{stats.totalProducts}</h3>
             </div>
+          </div>
+          <div className="mt-4 flex items-center text-sm">
+            <span className="flex items-center text-red-600">
+              <ArrowDown className="mr-1 h-4 w-4" />
+              2.1%
+            </span>
+            <span className="ml-2 text-gray-500">from last month</span>
           </div>
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
-          <div className="mb-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <h3 className="text-lg font-medium text-gray-900">
-              Sales Overview
-            </h3>
-            <select className="w-full sm:w-auto rounded-md border border-gray-300 px-2 py-1 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
-              <option>This Week</option>
-              <option>This Month</option>
-              <option>This Year</option>
-            </select>
-          </div>
-          <div className="h-48 md:h-64">
-            <div className="flex h-full items-end">
-              {[35, 45, 30, 60, 75, 50, 40].map((value, index) => (
-                <div key={index} className="mx-1 flex-1">
-                  <div
-                    className="rounded-t bg-teal-600"
-                    style={{ height: `${value}%` }}
-                  ></div>
-                  <div className="mt-2 text-center text-xs text-gray-500">
-                    {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"][index]}
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Charts */}
+      <div className="mb-8 grid gap-6 lg:grid-cols-2">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-lg font-medium">Revenue by Month</h2>
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={stats.revenueByMonth} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip formatter={(value: number) => [`$${value}`, "Revenue"]} />
+                <Bar dataKey="revenue" fill="#0EA5E9" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
-          <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <h3 className="text-lg font-medium text-gray-900">Recent Orders</h3>
-            <Link
-              href="/admin/transactions"
-              className="text-sm font-medium text-teal-700 hover:text-teal-900"
-            >
-              View All
-            </Link>
-          </div>
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle px-4 sm:px-6 lg:px-8">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Order ID
-                    </th>
-                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Customer
-                    </th>
-                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Amount
-                    </th>
-                    <th className="px-2 md:px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                      Status
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {[1, 2, 3, 4, 5].map((order) => (
-                    <tr key={order}>
-                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm font-medium text-teal-700">
-                        #ORD-{2023000 + order}
-                      </td>
-                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-gray-900">
-                        John Doe
-                      </td>
-                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm text-gray-900">
-                        ${(129.99 * order).toFixed(2)}
-                      </td>
-                      <td className="whitespace-nowrap px-2 md:px-4 py-2 md:py-3 text-xs md:text-sm">
-                        <span
-                          className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                            order % 3 === 0
-                              ? "bg-yellow-100 text-yellow-800"
-                              : order % 3 === 1
-                              ? "bg-green-100 text-green-800"
-                              : "bg-gray-100 text-gray-800"
-                          }`}
-                        >
-                          {order % 3 === 0
-                            ? "Processing"
-                            : order % 3 === 1
-                            ? "Completed"
-                            : "Cancelled"}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">Top Products</h3>
-            <Link
-              href="/admin/products"
-              className="text-sm font-medium text-teal-700 hover:text-teal-900"
-            >
-              View All
-            </Link>
-          </div>
-          <div className="space-y-4">
-            {[1, 2, 3, 4].map((product) => (
-              <div key={product} className="flex items-center">
-                <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                    <Package className="h-6 w-6" />
-                  </div>
-                </div>
-                <div className="ml-3 flex-1">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium text-gray-900">
-                      {
-                        [
-                          "Premium Wireless Headphones",
-                          "Smart Watch",
-                          "Bluetooth Speaker",
-                          "Laptop Backpack",
-                        ][product - 1]
-                      }
-                    </div>
-                    <div className="text-sm font-medium text-gray-900">
-                      ${(99.99 + product * 10).toFixed(2)}
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    {20 - product * 2} sold
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">
-              Recent Activities
-            </h3>
-            <button className="text-sm font-medium text-teal-700 hover:text-teal-900">
-              View All
-            </button>
-          </div>
-          <div className="space-y-4">
-            {[
-              {
-                icon: ShoppingBag,
-                text: "New order placed",
-                time: "5 minutes ago",
-              },
-              {
-                icon: Users,
-                text: "New customer registered",
-                time: "1 hour ago",
-              },
-              {
-                icon: Package,
-                text: "Product stock updated",
-                time: "3 hours ago",
-              },
-              {
-                icon: DollarSign,
-                text: "Payment received",
-                time: "5 hours ago",
-              },
-            ].map((activity, index) => (
-              <div key={index} className="flex items-start">
-                <div className="rounded-full bg-gray-100 p-2 text-gray-600">
-                  <activity.icon className="h-4 w-4" />
-                </div>
-                <div className="ml-3">
-                  <div className="text-sm font-medium text-gray-900">
-                    {activity.text}
-                  </div>
-                  <div className="text-xs text-gray-500">{activity.time}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-lg border border-gray-200 bg-white p-3 md:p-4 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg font-medium text-gray-900">Pending Tasks</h3>
-            <button className="text-sm font-medium text-teal-700 hover:text-teal-900">
-              View All
-            </button>
-          </div>
-          <div className="space-y-4">
-            {[
-              {
-                text: "Update product inventory",
-                priority: "High",
-                due: "Today",
-              },
-              {
-                text: "Respond to customer inquiries",
-                priority: "Medium",
-                due: "Today",
-              },
-              {
-                text: "Prepare monthly sales report",
-                priority: "High",
-                due: "Tomorrow",
-              },
-              {
-                text: "Review new product submissions",
-                priority: "Low",
-                due: "3 days",
-              },
-            ].map((task, index) => (
-              <div key={index} className="flex items-start">
-                <div
-                  className={`rounded-full p-2 ${
-                    task.priority === "High"
-                      ? "bg-red-100 text-red-600"
-                      : task.priority === "Medium"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-green-100 text-green-600"
-                  }`}
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <h2 className="mb-4 text-lg font-medium">Sales by Category</h2>
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={stats.salesByCategory}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="sales"
+                  nameKey="category"
+                  label={({ name, percent }: { name: string, percent: number }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                 >
-                  {task.priority === "High" ? (
-                    <AlertCircle className="h-4 w-4" />
-                  ) : task.priority === "Medium" ? (
-                    <Clock className="h-4 w-4" />
-                  ) : (
-                    <Clock className="h-4 w-4" />
-                  )}
-                </div>
-                <div className="ml-3 flex-1">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-medium text-gray-900">
-                      {task.text}
-                    </div>
-                    <div className="text-xs font-medium text-gray-500">
-                      Due: {task.due}
-                    </div>
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Priority: {task.priority}
-                  </div>
-                </div>
-              </div>
-            ))}
+                  {stats.salesByCategory.map((entry: CategorySales, index: number) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value: number) => [`${value} units`, "Sales"]} />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
+        </div>
+      </div>
+
+      {/* Recent Orders */}
+      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-medium">Recent Orders</h2>
+          <Link href="/admin/orders" className="text-sm font-medium text-teal-700 hover:text-teal-800">
+            View All
+          </Link>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                >
+                  Order ID
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                >
+                  Customer
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                >
+                  Date
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                >
+                  Amount
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {stats.recentOrders.map((order: Order) => (
+                <tr key={order.id}>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <div className="text-sm font-medium text-gray-900">{order.id}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <div className="text-sm text-gray-900">{order.shippingAddress.name}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <div className="text-sm text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <div className="text-sm text-gray-900">${order.total.toFixed(2)}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-6 py-4">
+                    <span
+                      className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                        order.status === "delivered"
+                          ? "bg-green-100 text-green-800"
+                          : order.status === "shipped"
+                            ? "bg-blue-100 text-blue-800"
+                            : order.status === "processing"
+                              ? "bg-yellow-100 text-yellow-800"
+                              : order.status === "cancelled"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
+                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  );
+  )
 }

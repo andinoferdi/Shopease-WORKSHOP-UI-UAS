@@ -204,7 +204,8 @@ html {
 
 /* Float animation */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translate(-50%, -50%);
   }
   50% {
@@ -271,13 +272,13 @@ html {
 
 /* Preload critical animations */
 body::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 0;
   overflow: hidden;
   z-index: -1;
-  
+
   /* Preload animations */
   animation: float 0s 10s;
 }

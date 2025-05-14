@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -13,31 +13,31 @@ import {
   ChevronDown,
   Menu,
   X,
-} from "lucide-react";
-import { useState, useEffect } from "react";
+} from "lucide-react"
+import { useState, useEffect } from "react"
 
 export default function AdminSidebar() {
-  const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname()
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   // Check if mobile on mount and window resize
   useEffect(() => {
     const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 768)
       if (window.innerWidth >= 768) {
-        setIsMobileMenuOpen(false);
+        setIsMobileMenuOpen(false)
       }
-    };
+    }
 
     // Initial check
-    checkIfMobile();
+    checkIfMobile()
 
     // Add resize listener
-    window.addEventListener('resize', checkIfMobile);
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+    window.addEventListener("resize", checkIfMobile)
+    return () => window.removeEventListener("resize", checkIfMobile)
+  }, [])
 
   const menuItems = [
     {
@@ -65,7 +65,7 @@ export default function AdminSidebar() {
       icon: CreditCard,
       href: "/admin/transactions",
     },
-  ];
+  ]
 
   // Mobile menu toggle button (shown in header on mobile)
   const MobileMenuButton = () => (
@@ -76,12 +76,12 @@ export default function AdminSidebar() {
     >
       {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
     </button>
-  );
+  )
 
   return (
     <>
       <MobileMenuButton />
-      
+
       <aside
         className={`${
           isCollapsed ? "w-20" : "w-64"
@@ -90,24 +90,14 @@ export default function AdminSidebar() {
         md:block md:translate-x-0 md:w-20 lg:w-64`}
       >
         <div className="flex h-full flex-col">
-          <div
-            className={`flex h-16 items-center ${
-              isCollapsed ? "justify-center" : "px-4"
-            } border-b border-gray-800`}
-          >
+          <div className={`flex h-16 items-center ${isCollapsed ? "justify-center" : "px-4"} border-b border-gray-800`}>
             {!isCollapsed && !isMobile && (
-              <Link
-                href="/admin/dashboard"
-                className="text-xl font-bold text-white lg:block hidden"
-              >
+              <Link href="/admin/dashboard" className="text-xl font-bold text-white lg:block hidden">
                 ShopEase
               </Link>
             )}
             {isMobile && isMobileMenuOpen && (
-              <Link
-                href="/admin/dashboard"
-                className="text-xl font-bold text-white"
-              >
+              <Link href="/admin/dashboard" className="text-xl font-bold text-white">
                 ShopEase
               </Link>
             )}
@@ -117,38 +107,28 @@ export default function AdminSidebar() {
               } rounded-md p-1 text-gray-400 hover:bg-gray-800 hover:text-white hidden md:block`}
               onClick={() => setIsCollapsed(!isCollapsed)}
             >
-              <ChevronDown
-                className={`h-5 w-5 transform ${
-                  isCollapsed ? "rotate-90" : "-rotate-90"
-                }`}
-              />
+              <ChevronDown className={`h-5 w-5 transform ${isCollapsed ? "rotate-90" : "-rotate-90"}`} />
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto py-4">
             <nav className="space-y-1 px-2">
               {menuItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = pathname === item.href
 
                 return (
                   <Link
                     key={item.title}
                     href={item.href}
-                    className={`flex items-center ${
-                      isCollapsed ? "justify-center" : "px-2"
-                    } py-2 rounded-md ${
-                      isActive
-                        ? "bg-teal-700 text-white"
-                        : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                    className={`flex items-center ${isCollapsed ? "justify-center" : "px-2"} py-2 rounded-md ${
+                      isActive ? "bg-teal-700 text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
                     }`}
                     onClick={() => isMobile && setIsMobileMenuOpen(false)}
                   >
                     <item.icon className="h-6 w-6" />
-                    {(!isCollapsed || (isMobile && isMobileMenuOpen)) && (
-                      <span className="ml-3">{item.title}</span>
-                    )}
+                    {(!isCollapsed || (isMobile && isMobileMenuOpen)) && <span className="ml-3">{item.title}</span>}
                   </Link>
-                );
+                )
               })}
             </nav>
           </div>
@@ -162,9 +142,7 @@ export default function AdminSidebar() {
               onClick={() => isMobile && setIsMobileMenuOpen(false)}
             >
               <Settings className="h-6 w-6" />
-              {(!isCollapsed || (isMobile && isMobileMenuOpen)) && (
-                <span className="ml-3">Settings</span>
-              )}
+              {(!isCollapsed || (isMobile && isMobileMenuOpen)) && <span className="ml-3">Settings</span>}
             </Link>
             <Link
               href="/"
@@ -174,21 +152,19 @@ export default function AdminSidebar() {
               onClick={() => isMobile && setIsMobileMenuOpen(false)}
             >
               <LogOut className="h-6 w-6" />
-              {(!isCollapsed || (isMobile && isMobileMenuOpen)) && (
-                <span className="ml-3">Logout</span>
-              )}
+              {(!isCollapsed || (isMobile && isMobileMenuOpen)) && <span className="ml-3">Logout</span>}
             </Link>
           </div>
         </div>
       </aside>
-      
+
       {/* Overlay for mobile */}
       {isMobile && isMobileMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-30 bg-black bg-opacity-50 md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
     </>
-  );
+  )
 }

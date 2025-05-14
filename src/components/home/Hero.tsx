@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import Image from "next/image";
-import ParticlesBackground from "../effects/ParticlesBackground";
-import TextReveal from "../effects/TextReveal";
-import TypingText from "../effects/TypingText";
-import GlowingButton from "../effects/GlowingButton";
-import MagneticButton from "../effects/MagneticButton";
-import AnimatedBackground from "../effects/AnimatedBackground";
+import Link from "next/link"
+import Image from "next/image"
+import ParticlesBackground from "../effects/ParticlesBackground"
+import TextReveal from "../effects/TextReveal"
+import TypingText from "../effects/TypingText"
+import GlowingButton from "../effects/GlowingButton"
+import MagneticButton from "../effects/MagneticButton"
+import AnimatedBackground from "../effects/AnimatedBackground"
 
 export default function Hero() {
   return (
@@ -24,20 +24,14 @@ export default function Hero() {
             />
             <div className="h-12">
               <TypingText
-                text={[
-                  "for Your Lifestyle",
-                  "for Your Home",
-                  "for Your Business",
-                  "for Your Family",
-                ]}
+                text={["for Your Lifestyle", "for Your Home", "for Your Business", "for Your Family"]}
                 className="text-3xl font-bold leading-tight text-teal-700 md:text-4xl lg:text-5xl"
                 typingSpeed={80}
                 deletingSpeed={40}
               />
             </div>
             <p className="text-base text-gray-600">
-              Shop the latest trends and find everything you need with our
-              curated collection of high-quality products.
+              Shop the latest trends and find everything you need with our curated collection of high-quality products.
             </p>
             <div className="flex flex-wrap gap-4 mt-4">
               <GlowingButton className="rounded-md bg-teal-700 px-6 py-3 text-base font-bold text-white relative z-10 hover:bg-teal-600 transition-all duration-300">
@@ -79,5 +73,5 @@ export default function Hero() {
         </div>
       </div>
     </div>
-  );
+  )
 }

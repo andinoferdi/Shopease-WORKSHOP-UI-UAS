@@ -11,11 +11,13 @@
   "dependencies": {
     "@types/aos": "^3.0.7",
     "aos": "^2.3.4",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.503.0",
     "next": "15.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-parallax": "^3.5.2"
+    "react-parallax": "^3.5.2",
+    "recharts": "^2.15.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -1,27 +1,27 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useState, useRef } from "react";
-import { Send, CheckCircle } from "lucide-react";
-import ScrollReveal from "../effects/ScrollReveal";
-import FloatingElements from "../effects/FloatingElements";
+import { useState, useRef } from "react"
+import { Send, CheckCircle } from "lucide-react"
+import ScrollReveal from "../effects/ScrollReveal"
+import FloatingElements from "../effects/FloatingElements"
 
 export default function Newsletter() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     // Handle form submission logic here
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
+    setIsSubmitted(true)
+    setTimeout(() => setIsSubmitted(false), 3000)
 
     // Reset form
     if (formRef.current) {
-      formRef.current.reset();
+      formRef.current.reset()
     }
-  };
+  }
 
   return (
     <div className="relative overflow-hidden py-16 sm:py-24">
@@ -39,8 +39,7 @@ export default function Newsletter() {
             Subscribe to Our Newsletter
           </h2>
           <p className="mx-auto mb-10 max-w-2xl text-white/90 text-lg">
-            Stay updated with our latest products, exclusive offers, and helpful
-            shopping tips.
+            Stay updated with our latest products, exclusive offers, and helpful shopping tips.
           </p>
         </ScrollReveal>
 
@@ -50,19 +49,11 @@ export default function Newsletter() {
               {isSubmitted ? (
                 <div className="flex flex-col items-center justify-center py-10 text-center">
                   <CheckCircle className="mb-4 h-16 w-16 text-teal-400 animate-bounce" />
-                  <h3 className="text-2xl font-bold text-white mb-2">
-                    Thank You!
-                  </h3>
-                  <p className="text-gray-300">
-                    Your message has been sent successfully.
-                  </p>
+                  <h3 className="text-2xl font-bold text-white mb-2">Thank You!</h3>
+                  <p className="text-gray-300">Your message has been sent successfully.</p>
                 </div>
               ) : (
-                <form
-                  ref={formRef}
-                  onSubmit={handleSubmit}
-                  className="space-y-5"
-                >
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
                   <div className="group relative">
                     <input
                       type="text"
@@ -114,10 +105,9 @@ export default function Newsletter() {
         </ScrollReveal>
 
         <p className="mt-6 text-sm text-white/80">
-          By subscribing, you agree to our Privacy Policy and consent to receive
-          updates from our company.
+          By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
         </p>
       </div>
     </div>
-  );
+  )
 }

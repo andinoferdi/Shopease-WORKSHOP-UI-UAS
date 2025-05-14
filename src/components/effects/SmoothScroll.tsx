@@ -1,66 +1,64 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react"
 
 interface SmoothScrollProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export default function SmoothScroll({ children }: SmoothScrollProps) {
-  const scrollingContainerRef = useRef<HTMLDivElement>(null);
+  const scrollingContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     // Skip smooth scrolling on mobile devices
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 768) return
 
-    let current = 0;
-    let target = 0;
-    const ease = 0.075;
+    let current = 0
+    let target = 0
+    const ease = 0.075
 
-    const container = scrollingContainerRef.current;
-    if (!container) return;
+    const container = scrollingContainerRef.current
+    if (!container) return
 
     // Set the height of the body to match the scrolling div
     const setBodyHeight = () => {
-      document.body.style.height = `${
-        container.getBoundingClientRect().height
-      }px`;
-    };
+      document.body.style.height = `${container.getBoundingClientRect().height}px`
+    }
 
     // Initial height
-    setBodyHeight();
+    setBodyHeight()
 
     // Update height on resize
-    window.addEventListener("resize", setBodyHeight);
+    window.addEventListener("resize", setBodyHeight)
 
     // Smooth scrolling animation
     const smoothScroll = () => {
       // Get current scroll position
-      target = window.scrollY;
+      target = window.scrollY
 
       // Lerp - linear interpolation for smooth scrolling
-      current = current + (target - current) * ease;
+      current = current + (target - current) * ease
 
       // Round to prevent sub-pixel rendering issues
-      const roundedCurrent = Math.round(current * 100) / 100;
+      const roundedCurrent = Math.round(current * 100) / 100
 
       // Apply transform to the container
-      container.style.transform = `translateY(${-roundedCurrent}px)`;
+      container.style.transform = `translateY(${-roundedCurrent}px)`
 
       // Call next frame
-      requestAnimationFrame(smoothScroll);
-    };
+      requestAnimationFrame(smoothScroll)
+    }
 
     // Start the animation
-    requestAnimationFrame(smoothScroll);
+    requestAnimationFrame(smoothScroll)
 
     return () => {
-      window.removeEventListener("resize", setBodyHeight);
-      document.body.style.height = "";
-    };
-  }, []);
+      window.removeEventListener("resize", setBodyHeight)
+      document.body.style.height = ""
+    }
+  }, [])
 
   return (
     <div
@@ -73,5 +71,5 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     >
       {children}
     </div>
-  );
+  )
 }

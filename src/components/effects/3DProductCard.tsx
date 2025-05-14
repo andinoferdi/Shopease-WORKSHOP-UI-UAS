@@ -1,76 +1,71 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import { ShoppingCart, Heart } from "lucide-react";
+import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
+import { ShoppingCart, Heart } from "lucide-react"
 
 interface Product3DCardProps {
-  id: number;
-  name: string;
-  price: number;
-  rating: number;
-  image: string;
+  id: number
+  name: string
+  price: number
+  rating: number
+  image: string
 }
 
-export default function Product3DCard({
-  name,
-  price,
-  rating,
-  image,
-}: Product3DCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [rotation, setRotation] = useState({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+export default function Product3DCard({ name, price, rating, image }: Product3DCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [rotation, setRotation] = useState({ x: 0, y: 0 })
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+      setIsMobile(window.innerWidth < 768)
+    }
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
 
     return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
-  }, []);
+      window.removeEventListener("resize", checkMobile)
+    }
+  }, [])
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isMobile || !cardRef.current) return;
+    if (isMobile || !cardRef.current) return
 
-    const rect = cardRef.current.getBoundingClientRect();
+    const rect = cardRef.current.getBoundingClientRect()
 
     // Calculate mouse position relative to card center (in percentage)
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
 
     // Set rotation values (inverted for natural feel)
     setRotation({
       x: -y * 15, // Rotate around X-axis (horizontal)
       y: x * 15, // Rotate around Y-axis (vertical)
-    });
+    })
 
     // Set position for moving elements
     setPosition({
       x: x * 20,
       y: y * 20,
-    });
-  };
+    })
+  }
 
   const handleMouseLeave = () => {
     // Reset rotation and position when mouse leaves
-    setRotation({ x: 0, y: 0 });
-    setPosition({ x: 0, y: 0 });
-    setIsHovered(false);
-  };
+    setRotation({ x: 0, y: 0 })
+    setPosition({ x: 0, y: 0 })
+    setIsHovered(false)
+  }
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+    setIsHovered(true)
+  }
 
   return (
     <div
@@ -100,24 +95,16 @@ export default function Product3DCard({
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               style={{
-                transform: `translateX(${position.x * 0.5}px) translateY(${
-                  position.y * 0.5
-                }px)`,
-                transition: isHovered
-                  ? "transform 0.1s ease-out"
-                  : "transform 0.3s ease-out",
+                transform: `translateX(${position.x * 0.5}px) translateY(${position.y * 0.5}px)`,
+                transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
               }}
             />
           </div>
           <button
             className="absolute right-2 top-2 rounded-full bg-white p-2 text-gray-600 shadow-sm transition-colors hover:bg-teal-700 hover:text-white"
             style={{
-              transform: `translateZ(20px) translateX(${
-                position.x * 0.2
-              }px) translateY(${position.y * 0.2}px)`,
-              transition: isHovered
-                ? "transform 0.1s ease-out"
-                : "transform 0.3s ease-out",
+              transform: `translateZ(20px) translateX(${position.x * 0.2}px) translateY(${position.y * 0.2}px)`,
+              transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
             }}
           >
             <Heart className="h-4 w-4" />
@@ -127,23 +114,15 @@ export default function Product3DCard({
         <div
           className="p-4"
           style={{
-            transform: `translateZ(10px) translateX(${
-              position.x * 0.1
-            }px) translateY(${position.y * 0.1}px)`,
-            transition: isHovered
-              ? "transform 0.1s ease-out"
-              : "transform 0.3s ease-out",
+            transform: `translateZ(10px) translateX(${position.x * 0.1}px) translateY(${position.y * 0.1}px)`,
+            transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
           }}
         >
           <h3
             className="mb-2 text-lg font-medium text-gray-900"
             style={{
-              transform: `translateZ(25px) translateX(${
-                position.x * 0.15
-              }px) translateY(${position.y * 0.15}px)`,
-              transition: isHovered
-                ? "transform 0.1s ease-out"
-                : "transform 0.3s ease-out",
+              transform: `translateZ(25px) translateX(${position.x * 0.15}px) translateY(${position.y * 0.15}px)`,
+              transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
             }}
           >
             {name}
@@ -152,12 +131,8 @@ export default function Product3DCard({
           <div
             className="mb-2 flex items-center"
             style={{
-              transform: `translateZ(15px) translateX(${
-                position.x * 0.1
-              }px) translateY(${position.y * 0.1}px)`,
-              transition: isHovered
-                ? "transform 0.1s ease-out"
-                : "transform 0.3s ease-out",
+              transform: `translateZ(15px) translateX(${position.x * 0.1}px) translateY(${position.y * 0.1}px)`,
+              transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
             }}
           >
             <div className="flex">
@@ -168,8 +143,8 @@ export default function Product3DCard({
                     i < Math.floor(rating)
                       ? "fill-orange-400 text-orange-400"
                       : i < rating
-                      ? "fill-orange-400 text-orange-400"
-                      : "fill-gray-200 text-gray-200"
+                        ? "fill-orange-400 text-orange-400"
+                        : "fill-gray-200 text-gray-200"
                   }`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -190,26 +165,16 @@ export default function Product3DCard({
           <div
             className="flex items-center justify-between"
             style={{
-              transform: `translateZ(30px) translateX(${
-                position.x * 0.2
-              }px) translateY(${position.y * 0.2}px)`,
-              transition: isHovered
-                ? "transform 0.1s ease-out"
-                : "transform 0.3s ease-out",
+              transform: `translateZ(30px) translateX(${position.x * 0.2}px) translateY(${position.y * 0.2}px)`,
+              transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
             }}
           >
-            <span className="text-lg font-bold text-teal-700">
-              ${price.toFixed(2)}
-            </span>
+            <span className="text-lg font-bold text-teal-700">${price.toFixed(2)}</span>
             <button
               className="rounded-full bg-gray-100 p-2 text-gray-600 transition-colors hover:bg-teal-700 hover:text-white"
               style={{
-                transform: `translateZ(40px) translateX(${
-                  position.x * 0.25
-                }px) translateY(${position.y * 0.25}px)`,
-                transition: isHovered
-                  ? "transform 0.1s ease-out"
-                  : "transform 0.3s ease-out",
+                transform: `translateZ(40px) translateX(${position.x * 0.25}px) translateY(${position.y * 0.25}px)`,
+                transition: isHovered ? "transform 0.1s ease-out" : "transform 0.3s ease-out",
               }}
             >
               <ShoppingCart className="h-4 w-4" />
@@ -232,5 +197,5 @@ export default function Product3DCard({
         />
       )}
     </div>
-  );
+  )
 }

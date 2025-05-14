@@ -1,20 +1,13 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState } from "react"
+import { ChevronDown } from "lucide-react"
 
 export function ProductSorter() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Featured");
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedOption, setSelectedOption] = useState("Featured")
 
-  const options = [
-    "Featured",
-    "Price: Low to High",
-    "Price: High to Low",
-    "Newest",
-    "Best Selling",
-    "Top Rated",
-  ];
+  const options = ["Featured", "Price: Low to High", "Price: High to Low", "Newest", "Best Selling", "Top Rated"]
 
   return (
     <div className="relative">
@@ -33,13 +26,11 @@ export function ProductSorter() {
               <button
                 key={option}
                 className={`block w-full px-4 py-2 text-left text-sm ${
-                  selectedOption === option
-                    ? "bg-gray-100 text-teal-700 font-medium"
-                    : "text-gray-700 hover:bg-gray-50"
+                  selectedOption === option ? "bg-gray-100 text-teal-700 font-medium" : "text-gray-700 hover:bg-gray-50"
                 }`}
                 onClick={() => {
-                  setSelectedOption(option);
-                  setIsOpen(false);
+                  setSelectedOption(option)
+                  setIsOpen(false)
                 }}
               >
                 {option}
@@ -49,5 +40,5 @@ export function ProductSorter() {
         </div>
       )}
     </div>
-  );
+  )
 }

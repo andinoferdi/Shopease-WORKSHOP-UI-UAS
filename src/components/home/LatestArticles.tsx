@@ -1,14 +1,13 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Calendar, User } from "lucide-react";
+import Link from "next/link"
+import Image from "next/image"
+import { Calendar, User } from "lucide-react"
 
 export default function LatestArticles() {
   const articles = [
     {
       id: 1,
       title: "The Future of E-commerce",
-      excerpt:
-        "Discover the latest trends and technologies shaping the future of online shopping.",
+      excerpt: "Discover the latest trends and technologies shaping the future of online shopping.",
       category: "Technology",
       date: "Nov 15, 2023",
       author: "Admin",
@@ -18,8 +17,7 @@ export default function LatestArticles() {
     {
       id: 2,
       title: "Top 10 Fashion Trends",
-      excerpt:
-        "Stay ahead of the curve with these top fashion trends for the upcoming season.",
+      excerpt: "Stay ahead of the curve with these top fashion trends for the upcoming season.",
       category: "Fashion",
       date: "Nov 12, 2023",
       author: "Admin",
@@ -29,25 +27,19 @@ export default function LatestArticles() {
     {
       id: 3,
       title: "How to Choose the Perfect Headphones",
-      excerpt:
-        "A comprehensive guide to selecting the right headphones for your needs and preferences.",
+      excerpt: "A comprehensive guide to selecting the right headphones for your needs and preferences.",
       category: "Technology",
       date: "Nov 10, 2023",
       author: "Admin",
       image: "/placeholder.svg?height=200&width=400",
       delay: 300,
     },
-  ];
+  ]
 
   return (
     <div className="container mx-auto px-4 py-16">
-      <div
-        className="mb-8 flex items-center justify-between"
-        data-animate="fade-up"
-      >
-        <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
-          Latest Articles
-        </h2>
+      <div className="mb-8 flex items-center justify-between" data-animate="fade-up">
+        <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">Latest Articles</h2>
         <Link
           href="/articles"
           className="text-sm font-medium text-teal-700 hover:text-teal-900 transition-colors duration-300"
@@ -87,24 +79,12 @@ export default function LatestArticles() {
                     <span>{article.author}</span>
                   </div>
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900">
-                  {article.title}
-                </h3>
+                <h3 className="mb-2 text-xl font-bold text-gray-900">{article.title}</h3>
                 <p className="mb-4 text-gray-600">{article.excerpt}</p>
                 <div className="flex items-center text-teal-700">
                   <span className="font-medium">Read More</span>
-                  <svg
-                    className="ml-1 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
+                  <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </div>
               </div>
@@ -113,5 +93,5 @@ export default function LatestArticles() {
         ))}
       </div>
     </div>
-  );
+  )
 }

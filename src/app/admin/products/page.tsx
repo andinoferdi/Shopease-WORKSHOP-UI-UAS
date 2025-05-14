@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { Search, Plus, Edit, Trash2, MoreHorizontal } from "lucide-react";
+import Image from "next/image"
+import { Search, Plus, Edit, Trash2, MoreHorizontal } from "lucide-react"
 
 export default function AdminProducts() {
   return (
@@ -107,12 +107,7 @@ export default function AdminProducts() {
                 <td className="whitespace-nowrap px-6 py-4">
                   <div className="flex items-center">
                     <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-md">
-                      <Image
-                        src="/placeholder.svg?height=40&width=40"
-                        alt="Product"
-                        fill
-                        className="object-cover"
-                      />
+                      <Image src="/placeholder.svg?height=40&width=40" alt="Product" fill className="object-cover" />
                     </div>
                     <div className="ml-4">
                       <div className="text-sm font-medium text-gray-900">
@@ -129,9 +124,7 @@ export default function AdminProducts() {
                           ][product - 1]
                         }
                       </div>
-                      <div className="text-sm text-gray-500">
-                        SKU: PRD-{1000 + product}
-                      </div>
+                      <div className="text-sm text-gray-500">SKU: PRD-{1000 + product}</div>
                     </div>
                   </div>
                 </td>
@@ -152,24 +145,18 @@ export default function AdminProducts() {
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
                   ${(99.99 + product * 10).toFixed(2)}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                  {50 - product * 5}
-                </td>
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">{50 - product * 5}</td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm">
                   <span
                     className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
                       product % 3 === 0
                         ? "bg-yellow-100 text-yellow-800"
                         : product % 3 === 1
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
                     }`}
                   >
-                    {product % 3 === 0
-                      ? "Low Stock"
-                      : product % 3 === 1
-                      ? "In Stock"
-                      : "Out of Stock"}
+                    {product % 3 === 0 ? "Low Stock" : product % 3 === 1 ? "In Stock" : "Out of Stock"}
                   </span>
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
@@ -193,8 +180,7 @@ export default function AdminProducts() {
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-500">
-          Showing <span className="font-medium">1</span> to{" "}
-          <span className="font-medium">8</span> of{" "}
+          Showing <span className="font-medium">1</span> to <span className="font-medium">8</span> of{" "}
           <span className="font-medium">24</span> products
         </div>
 
@@ -217,5 +203,5 @@ export default function AdminProducts() {
         </div>
       </div>
     </div>
-  );
+  )
 }

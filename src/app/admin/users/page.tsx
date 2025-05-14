@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { Search, Plus, Edit, Trash2, MoreHorizontal } from "lucide-react";
+import Image from "next/image"
+import { Search, Plus, Edit, Trash2, MoreHorizontal } from "lucide-react"
 
 export default function AdminUsers() {
   return (
@@ -131,48 +131,26 @@ export default function AdminUsers() {
                       <div className="text-sm text-gray-500">
                         @
                         {
-                          [
-                            "johndoe",
-                            "janesmith",
-                            "rjohnson",
-                            "emilyd",
-                            "mwilson",
-                            "sbrown",
-                            "dmiller",
-                            "ltaylor",
-                          ][user - 1]
+                          ["johndoe", "janesmith", "rjohnson", "emilyd", "mwilson", "sbrown", "dmiller", "ltaylor"][
+                            user - 1
+                          ]
                         }
                       </div>
                     </div>
                   </div>
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                  {
-                    [
-                      "johndoe",
-                      "janesmith",
-                      "rjohnson",
-                      "emilyd",
-                      "mwilson",
-                      "sbrown",
-                      "dmiller",
-                      "ltaylor",
-                    ][user - 1]
-                  }
+                  {["johndoe", "janesmith", "rjohnson", "emilyd", "mwilson", "sbrown", "dmiller", "ltaylor"][user - 1]}
                   @example.com
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                   {user === 1 ? "Admin" : user === 2 ? "Editor" : "Customer"}
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                  Nov {user + 10}, 2023
-                </td>
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">Nov {user + 10}, 2023</td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm">
                   <span
                     className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                      user % 5 === 0
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-green-100 text-green-800"
+                      user % 5 === 0 ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"
                     }`}
                   >
                     {user % 5 === 0 ? "Inactive" : "Active"}
@@ -199,8 +177,7 @@ export default function AdminUsers() {
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-500">
-          Showing <span className="font-medium">1</span> to{" "}
-          <span className="font-medium">8</span> of{" "}
+          Showing <span className="font-medium">1</span> to <span className="font-medium">8</span> of{" "}
           <span className="font-medium">20</span> users
         </div>
 
@@ -223,5 +200,5 @@ export default function AdminUsers() {
         </div>
       </div>
     </div>
-  );
+  )
 }

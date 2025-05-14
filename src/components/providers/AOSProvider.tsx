@@ -1,26 +1,26 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import { useEffect, useState } from "react"
+import AOS from "aos"
+import "aos/dist/aos.css"
 
 export default function AOSProvider({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const [isHydrated, setIsHydrated] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false)
 
   // Set hydration state
   useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+    setIsHydrated(true)
+  }, [])
 
   useEffect(() => {
     // Only initialize AOS after hydration
-    if (!isHydrated) return;
+    if (!isHydrated) return
 
     AOS.init({
       easing: "ease-out-cubic",
@@ -28,8 +28,8 @@ export default function AOSProvider({
       offset: 50,
       delay: 50,
       duration: 800,
-    });
-  }, [isHydrated]);
+    })
+  }, [isHydrated])
 
-  return <>{children}</>;
+  return <>{children}</>
 }

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { CreditCard, ShieldCheck, Truck } from "lucide-react";
+import Link from "next/link"
+import { CreditCard, ShieldCheck, Truck } from "lucide-react"
 
 export default function Payment() {
   return (
@@ -9,21 +9,15 @@ export default function Payment() {
       <div className="mb-8">
         <div className="flex justify-between border-b border-gray-200 pb-4">
           <div className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-700 text-white">
-              1
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-700 text-white">1</div>
             <span className="font-medium text-gray-900">Shipping</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-700 text-white">
-              2
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-teal-700 text-white">2</div>
             <span className="font-medium text-gray-900">Payment</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-gray-600">
-              3
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-gray-600">3</div>
             <span className="font-medium text-gray-500">Confirmation</span>
           </div>
         </div>
@@ -32,9 +26,7 @@ export default function Payment() {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <div className="rounded-lg border border-gray-200 bg-white p-6">
-            <h2 className="mb-6 text-xl font-medium text-gray-900">
-              Payment Method
-            </h2>
+            <h2 className="mb-6 text-xl font-medium text-gray-900">Payment Method</h2>
 
             <div className="space-y-4">
               <div className="flex items-center space-x-3 rounded-md border border-gray-300 p-4">
@@ -45,10 +37,7 @@ export default function Payment() {
                   className="h-4 w-4 text-teal-700"
                   defaultChecked
                 />
-                <label
-                  htmlFor="credit-card"
-                  className="flex flex-1 items-center"
-                >
+                <label htmlFor="credit-card" className="flex flex-1 items-center">
                   <CreditCard className="mr-2 h-5 w-5 text-gray-600" />
                   <span>Credit / Debit Card</span>
                 </label>
@@ -57,10 +46,7 @@ export default function Payment() {
               <div className="rounded-md border border-gray-200 p-6">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="md:col-span-2">
-                    <label
-                      htmlFor="card-number"
-                      className="mb-1 block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="card-number" className="mb-1 block text-sm font-medium text-gray-700">
                       Card Number
                     </label>
                     <input
@@ -72,10 +58,7 @@ export default function Payment() {
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="expiry"
-                      className="mb-1 block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="expiry" className="mb-1 block text-sm font-medium text-gray-700">
                       Expiry Date
                     </label>
                     <input
@@ -87,10 +70,7 @@ export default function Payment() {
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="cvv"
-                      className="mb-1 block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="cvv" className="mb-1 block text-sm font-medium text-gray-700">
                       CVV
                     </label>
                     <input
@@ -102,10 +82,7 @@ export default function Payment() {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label
-                      htmlFor="name"
-                      className="mb-1 block text-sm font-medium text-gray-700"
-                    >
+                    <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">
                       Name on Card
                     </label>
                     <input
@@ -119,28 +96,18 @@ export default function Payment() {
               </div>
 
               <div className="flex items-center space-x-3 rounded-md border border-gray-300 p-4">
-                <input
-                  type="radio"
-                  id="paypal"
-                  name="payment-method"
-                  className="h-4 w-4 text-teal-700"
-                />
+                <input type="radio" id="paypal" name="payment-method" className="h-4 w-4 text-teal-700" />
                 <label htmlFor="paypal" className="flex-1">
                   PayPal
                 </label>
               </div>
             </div>
 
-            <h2 className="mb-6 mt-8 text-xl font-medium text-gray-900">
-              Billing Address
-            </h2>
+            <h2 className="mb-6 mt-8 text-xl font-medium text-gray-900">Billing Address</h2>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <label
-                  htmlFor="first-name"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="first-name" className="mb-1 block text-sm font-medium text-gray-700">
                   First Name
                 </label>
                 <input
@@ -151,10 +118,7 @@ export default function Payment() {
               </div>
 
               <div>
-                <label
-                  htmlFor="last-name"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="last-name" className="mb-1 block text-sm font-medium text-gray-700">
                   Last Name
                 </label>
                 <input
@@ -165,10 +129,7 @@ export default function Payment() {
               </div>
 
               <div className="md:col-span-2">
-                <label
-                  htmlFor="address"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="address" className="mb-1 block text-sm font-medium text-gray-700">
                   Address
                 </label>
                 <input
@@ -179,10 +140,7 @@ export default function Payment() {
               </div>
 
               <div>
-                <label
-                  htmlFor="city"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="city" className="mb-1 block text-sm font-medium text-gray-700">
                   City
                 </label>
                 <input
@@ -193,10 +151,7 @@ export default function Payment() {
               </div>
 
               <div>
-                <label
-                  htmlFor="postal-code"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="postal-code" className="mb-1 block text-sm font-medium text-gray-700">
                   Postal Code
                 </label>
                 <input
@@ -207,10 +162,7 @@ export default function Payment() {
               </div>
 
               <div>
-                <label
-                  htmlFor="country"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="country" className="mb-1 block text-sm font-medium text-gray-700">
                   Country
                 </label>
                 <select
@@ -224,10 +176,7 @@ export default function Payment() {
               </div>
 
               <div>
-                <label
-                  htmlFor="phone"
-                  className="mb-1 block text-sm font-medium text-gray-700"
-                >
+                <label htmlFor="phone" className="mb-1 block text-sm font-medium text-gray-700">
                   Phone
                 </label>
                 <input
@@ -242,22 +191,16 @@ export default function Payment() {
 
         <div>
           <div className="rounded-lg border border-gray-200 bg-white p-6">
-            <h2 className="mb-4 text-lg font-medium text-gray-900">
-              Order Summary
-            </h2>
+            <h2 className="mb-4 text-lg font-medium text-gray-900">Order Summary</h2>
 
             <div className="mb-4 space-y-3">
               {[1, 2].map((item) => (
                 <div key={item} className="flex justify-between">
                   <div>
-                    <div className="text-sm font-medium text-gray-900">
-                      Premium Wireless Headphones
-                    </div>
+                    <div className="text-sm font-medium text-gray-900">Premium Wireless Headphones</div>
                     <div className="text-xs text-gray-500">Qty: 1</div>
                   </div>
-                  <div className="text-sm font-medium text-gray-900">
-                    $129.99
-                  </div>
+                  <div className="text-sm font-medium text-gray-900">$129.99</div>
                 </div>
               ))}
             </div>
@@ -276,12 +219,8 @@ export default function Payment() {
                 <span className="text-sm font-medium">$26.00</span>
               </div>
               <div className="flex justify-between border-t border-gray-200 pt-2">
-                <span className="text-base font-medium text-gray-900">
-                  Total
-                </span>
-                <span className="text-base font-bold text-teal-700">
-                  $295.97
-                </span>
+                <span className="text-base font-medium text-gray-900">Total</span>
+                <span className="text-base font-bold text-teal-700">$295.97</span>
               </div>
             </div>
 
@@ -308,5 +247,5 @@ export default function Payment() {
         </div>
       </div>
     </div>
-  );
+  )
 }

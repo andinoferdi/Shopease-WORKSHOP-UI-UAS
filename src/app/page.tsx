@@ -1,9 +1,9 @@
-import Hero from "@/components/home/Hero";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import Categories from "@/components/home/Categories";
-import LatestArticles from "@/components/home/LatestArticles";
-import Testimonials from "@/components/home/Testimonials";
-import Newsletter from "@/components/home/Newsletter";
+import Hero from "@/components/home/Hero"
+import FeaturedProducts from "@/components/home/FeaturedProducts"
+import Categories from "@/components/home/Categories"
+import LatestArticles from "@/components/home/LatestArticles"
+import Testimonials from "@/components/home/Testimonials"
+import Newsletter from "@/components/home/Newsletter"
 
 export default function Home() {
   return (
@@ -30,5 +30,5 @@ export default function Home() {
 
       <Newsletter />
     </div>
-  );
+  )
 }

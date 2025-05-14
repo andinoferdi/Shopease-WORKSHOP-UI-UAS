@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Search, Calendar, User } from "lucide-react";
+import Link from "next/link"
+import Image from "next/image"
+import { Search, Calendar, User } from "lucide-react"
 
 export default function ArticleArchive() {
   return (
@@ -76,25 +76,14 @@ export default function ArticleArchive() {
                   }
                 </h2>
                 <p className="mb-4 text-gray-600 line-clamp-3">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                  aliquip ex ea commodo consequat.
                 </p>
                 <div className="flex items-center text-teal-700">
                   <span className="font-medium">Read More</span>
-                  <svg
-                    className="ml-1 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
+                  <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </div>
               </div>
@@ -123,5 +112,5 @@ export default function ArticleArchive() {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { Search, Plus, Edit, Trash2, MoreHorizontal } from "lucide-react";
+import Image from "next/image"
+import { Search, Plus, Edit, Trash2, MoreHorizontal } from "lucide-react"
 
 export default function AdminArticles() {
   return (
@@ -130,9 +130,8 @@ export default function AdminArticles() {
                         }
                       </div>
                       <div className="text-sm text-gray-500 line-clamp-1">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua.
                       </div>
                     </div>
                   </div>
@@ -151,27 +150,19 @@ export default function AdminArticles() {
                     ][article - 1]
                   }
                 </td>
-                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                  Admin
-                </td>
-                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                  Nov {article + 10}, 2023
-                </td>
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">Admin</td>
+                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">Nov {article + 10}, 2023</td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm">
                   <span
                     className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
                       article % 3 === 0
                         ? "bg-yellow-100 text-yellow-800"
                         : article % 3 === 1
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
                     }`}
                   >
-                    {article % 3 === 0
-                      ? "Draft"
-                      : article % 3 === 1
-                      ? "Published"
-                      : "Archived"}
+                    {article % 3 === 0 ? "Draft" : article % 3 === 1 ? "Published" : "Archived"}
                   </span>
                 </td>
                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
@@ -195,8 +186,7 @@ export default function AdminArticles() {
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-gray-500">
-          Showing <span className="font-medium">1</span> to{" "}
-          <span className="font-medium">8</span> of{" "}
+          Showing <span className="font-medium">1</span> to <span className="font-medium">8</span> of{" "}
           <span className="font-medium">16</span> articles
         </div>
 
@@ -216,5 +206,5 @@ export default function AdminArticles() {
         </div>
       </div>
     </div>
-  );
+  )
 }

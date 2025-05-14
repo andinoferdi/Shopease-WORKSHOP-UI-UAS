@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState } from "react"
+import { ChevronDown } from "lucide-react"
 
 export default function ProductFilters() {
-  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [priceRange, setPriceRange] = useState([0, 500])
   const [expandedSections, setExpandedSections] = useState({
     categories: true,
     price: true,
     brands: true,
     ratings: true,
-  });
+  })
 
   const toggleSection = (section: keyof typeof expandedSections) => {
     setExpandedSections({
       ...expandedSections,
       [section]: !expandedSections[section],
-    });
-  };
+    })
+  }
 
   return (
     <div className="space-y-6">
@@ -28,35 +28,26 @@ export default function ProductFilters() {
         >
           <span>Categories</span>
           <ChevronDown
-            className={`h-5 w-5 transform transition-transform ${
-              expandedSections.categories ? "rotate-180" : ""
-            }`}
+            className={`h-5 w-5 transform transition-transform ${expandedSections.categories ? "rotate-180" : ""}`}
           />
         </button>
 
         {expandedSections.categories && (
           <div className="mt-4 space-y-2">
-            {[
-              "Electronics",
-              "Clothing",
-              "Home & Kitchen",
-              "Beauty & Personal Care",
-              "Sports & Outdoors",
-            ].map((category) => (
-              <div key={category} className="flex items-center">
-                <input
-                  type="checkbox"
-                  id={`category-${category}`}
-                  className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                />
-                <label
-                  htmlFor={`category-${category}`}
-                  className="ml-2 text-sm text-gray-700"
-                >
-                  {category}
-                </label>
-              </div>
-            ))}
+            {["Electronics", "Clothing", "Home & Kitchen", "Beauty & Personal Care", "Sports & Outdoors"].map(
+              (category) => (
+                <div key={category} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`category-${category}`}
+                    className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                  />
+                  <label htmlFor={`category-${category}`} className="ml-2 text-sm text-gray-700">
+                    {category}
+                  </label>
+                </div>
+              ),
+            )}
           </div>
         )}
       </div>
@@ -68,9 +59,7 @@ export default function ProductFilters() {
         >
           <span>Price Range</span>
           <ChevronDown
-            className={`h-5 w-5 transform transition-transform ${
-              expandedSections.price ? "rotate-180" : ""
-            }`}
+            className={`h-5 w-5 transform transition-transform ${expandedSections.price ? "rotate-180" : ""}`}
           />
         </button>
 
@@ -86,9 +75,7 @@ export default function ProductFilters() {
               max="1000"
               step="10"
               value={priceRange[1]}
-              onChange={(e) =>
-                setPriceRange([priceRange[0], Number.parseInt(e.target.value)])
-              }
+              onChange={(e) => setPriceRange([priceRange[0], Number.parseInt(e.target.value)])}
               className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200"
             />
             <div className="mt-4 flex items-center space-x-2">
@@ -97,12 +84,7 @@ export default function ProductFilters() {
                 min="0"
                 max={priceRange[1]}
                 value={priceRange[0]}
-                onChange={(e) =>
-                  setPriceRange([
-                    Number.parseInt(e.target.value),
-                    priceRange[1],
-                  ])
-                }
+                onChange={(e) => setPriceRange([Number.parseInt(e.target.value), priceRange[1]])}
                 className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
               <span className="text-gray-500">to</span>
@@ -111,12 +93,7 @@ export default function ProductFilters() {
                 min={priceRange[0]}
                 max="1000"
                 value={priceRange[1]}
-                onChange={(e) =>
-                  setPriceRange([
-                    priceRange[0],
-                    Number.parseInt(e.target.value),
-                  ])
-                }
+                onChange={(e) => setPriceRange([priceRange[0], Number.parseInt(e.target.value)])}
                 className="w-full rounded-md border border-gray-300 p-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500"
               />
             </div>
@@ -131,31 +108,24 @@ export default function ProductFilters() {
         >
           <span>Brands</span>
           <ChevronDown
-            className={`h-5 w-5 transform transition-transform ${
-              expandedSections.brands ? "rotate-180" : ""
-            }`}
+            className={`h-5 w-5 transform transition-transform ${expandedSections.brands ? "rotate-180" : ""}`}
           />
         </button>
 
         {expandedSections.brands && (
           <div className="mt-4 space-y-2">
-            {["Apple", "Samsung", "Sony", "Bose", "Nike", "Adidas"].map(
-              (brand) => (
-                <div key={brand} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`brand-${brand}`}
-                    className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
-                  />
-                  <label
-                    htmlFor={`brand-${brand}`}
-                    className="ml-2 text-sm text-gray-700"
-                  >
-                    {brand}
-                  </label>
-                </div>
-              )
-            )}
+            {["Apple", "Samsung", "Sony", "Bose", "Nike", "Adidas"].map((brand) => (
+              <div key={brand} className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={`brand-${brand}`}
+                  className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                />
+                <label htmlFor={`brand-${brand}`} className="ml-2 text-sm text-gray-700">
+                  {brand}
+                </label>
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -167,9 +137,7 @@ export default function ProductFilters() {
         >
           <span>Ratings</span>
           <ChevronDown
-            className={`h-5 w-5 transform transition-transform ${
-              expandedSections.ratings ? "rotate-180" : ""
-            }`}
+            className={`h-5 w-5 transform transition-transform ${expandedSections.ratings ? "rotate-180" : ""}`}
           />
         </button>
 
@@ -182,18 +150,13 @@ export default function ProductFilters() {
                   id={`rating-${rating}`}
                   className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
                 />
-                <label
-                  htmlFor={`rating-${rating}`}
-                  className="ml-2 flex items-center text-sm text-gray-700"
-                >
+                <label htmlFor={`rating-${rating}`} className="ml-2 flex items-center text-sm text-gray-700">
                   <span className="flex">
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
                         className={`h-4 w-4 ${
-                          i < rating
-                            ? "fill-orange-400 text-orange-400"
-                            : "fill-gray-200 text-gray-200"
+                          i < rating ? "fill-orange-400 text-orange-400" : "fill-gray-200 text-gray-200"
                         }`}
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -225,5 +188,5 @@ export default function ProductFilters() {
         </button>
       </div>
     </div>
-  );
+  )
 }

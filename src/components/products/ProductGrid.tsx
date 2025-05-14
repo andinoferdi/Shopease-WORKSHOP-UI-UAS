@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Star, ShoppingCart, Heart } from "lucide-react";
+import Link from "next/link"
+import Image from "next/image"
+import { Star, ShoppingCart, Heart } from "lucide-react"
 
 export default function ProductGrid() {
   const products = Array.from({ length: 12 }, (_, i) => ({
@@ -22,7 +22,7 @@ export default function ProductGrid() {
     price: 49.99 + i * 10,
     rating: 3.5 + (i % 2),
     image: "/placeholder.svg?height=300&width=300",
-  }));
+  }))
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
@@ -48,9 +48,7 @@ export default function ProductGrid() {
           </div>
           <div className="p-4">
             <Link href={`/products/${product.id}`} className="block">
-              <h3 className="mb-2 text-lg font-medium text-gray-900">
-                {product.name}
-              </h3>
+              <h3 className="mb-2 text-lg font-medium text-gray-900">{product.name}</h3>
               <div className="mb-2 flex items-center">
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
@@ -60,21 +58,17 @@ export default function ProductGrid() {
                         i < Math.floor(product.rating)
                           ? "fill-orange-400 text-orange-400"
                           : i < product.rating
-                          ? "fill-orange-400 text-orange-400"
-                          : "fill-gray-200 text-gray-200"
+                            ? "fill-orange-400 text-orange-400"
+                            : "fill-gray-200 text-gray-200"
                       }`}
                     />
                   ))}
                 </div>
-                <span className="ml-2 text-xs text-gray-500">
-                  {product.rating}
-                </span>
+                <span className="ml-2 text-xs text-gray-500">{product.rating}</span>
               </div>
             </Link>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-bold text-teal-700">
-                ${product.price.toFixed(2)}
-              </span>
+              <span className="text-lg font-bold text-teal-700">${product.price.toFixed(2)}</span>
               <button className="rounded-full bg-gray-100 p-2 text-gray-600 transition-colors hover:bg-teal-700 hover:text-white">
                 <ShoppingCart className="h-4 w-4" />
               </button>
@@ -83,5 +77,5 @@ export default function ProductGrid() {
         </div>
       ))}
     </div>
-  );
+  )
 }

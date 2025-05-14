@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Star, ShoppingCart } from "lucide-react";
+import Link from "next/link"
+import Image from "next/image"
+import { Star, ShoppingCart } from "lucide-react"
 
 export default function RelatedProducts() {
   const products = [
@@ -32,13 +32,11 @@ export default function RelatedProducts() {
       rating: 4.2,
       image: "/placeholder.svg?height=200&width=200",
     },
-  ];
+  ]
 
   return (
     <div className="mt-16">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900">
-        You May Also Like
-      </h2>
+      <h2 className="mb-6 text-2xl font-bold text-gray-900">You May Also Like</h2>
 
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
         {products.map((product) => (
@@ -56,9 +54,7 @@ export default function RelatedProducts() {
                 />
               </div>
               <div className="p-4">
-                <h3 className="mb-2 text-sm font-medium text-gray-900">
-                  {product.name}
-                </h3>
+                <h3 className="mb-2 text-sm font-medium text-gray-900">{product.name}</h3>
                 <div className="mb-2 flex items-center">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
@@ -68,20 +64,16 @@ export default function RelatedProducts() {
                           i < Math.floor(product.rating)
                             ? "fill-orange-400 text-orange-400"
                             : i < product.rating
-                            ? "fill-orange-400 text-orange-400"
-                            : "fill-gray-200 text-gray-200"
+                              ? "fill-orange-400 text-orange-400"
+                              : "fill-gray-200 text-gray-200"
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="ml-1 text-xs text-gray-500">
-                    {product.rating}
-                  </span>
+                  <span className="ml-1 text-xs text-gray-500">{product.rating}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-teal-700">
-                    ${product.price.toFixed(2)}
-                  </span>
+                  <span className="text-sm font-bold text-teal-700">${product.price.toFixed(2)}</span>
                   <button className="rounded-full bg-gray-100 p-1.5 text-gray-600 transition-colors hover:bg-teal-700 hover:text-white">
                     <ShoppingCart className="h-3 w-3" />
                   </button>
@@ -92,5 +84,5 @@ export default function RelatedProducts() {
         ))}
       </div>
     </div>
-  );
+  )
 }

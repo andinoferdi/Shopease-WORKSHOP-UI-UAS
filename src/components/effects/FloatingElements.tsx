@@ -1,27 +1,27 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react"
 
 interface FloatingElement {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  speed: number;
-  color: string;
-  opacity: number;
-  blur: number;
-  delay: number;
+  id: number
+  x: number
+  y: number
+  size: number
+  speed: number
+  color: string
+  opacity: number
+  blur: number
+  delay: number
 }
 
 interface FloatingElementsProps {
-  count?: number;
-  minSize?: number;
-  maxSize?: number;
-  minSpeed?: number;
-  maxSpeed?: number;
-  colors?: string[];
-  className?: string;
+  count?: number
+  minSize?: number
+  maxSize?: number
+  minSpeed?: number
+  maxSpeed?: number
+  colors?: string[]
+  className?: string
 }
 
 export default function FloatingElements({
@@ -35,21 +35,21 @@ export default function FloatingElements({
 }: FloatingElementsProps) {
   // Always render an empty container immediately for SSR
   // This prevents blank screens during hydration
-  const [elements, setElements] = useState<FloatingElement[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
-  const initializedRef = useRef(false);
-  const maxElementsRef = useRef(count);
-  
+  const [elements, setElements] = useState<FloatingElement[]>([])
+  const [isMounted, setIsMounted] = useState(false)
+  const initializedRef = useRef(false)
+  const maxElementsRef = useRef(count)
+
   // Handle client-side only rendering
   useEffect(() => {
-    setIsMounted(true);
-    
+    setIsMounted(true)
+
     // Check if this is a mobile device and set max elements
-    if (typeof window !== 'undefined') {
-      maxElementsRef.current = window.innerWidth < 768 ? Math.min(8, count) : count;
+    if (typeof window !== "undefined") {
+      maxElementsRef.current = window.innerWidth < 768 ? Math.min(8, count) : count
     }
-  }, [count]);
-  
+  }, [count])
+
   // Use refs to store prop values to prevent dependency changes on every render
   const propsRef = useRef({
     count: maxElementsRef.current,
@@ -57,9 +57,9 @@ export default function FloatingElements({
     maxSize,
     minSpeed,
     maxSpeed,
-    colors
-  });
-  
+    colors,
+  })
+
   // Update ref values when props change
   useEffect(() => {
     propsRef.current = {
@@ -68,29 +68,29 @@ export default function FloatingElements({
       maxSize,
       minSpeed,
       maxSpeed,
-      colors
-    };
-  }, [minSize, maxSize, minSpeed, maxSpeed, colors]);
+      colors,
+    }
+  }, [minSize, maxSize, minSpeed, maxSpeed, colors])
 
   // Initialize elements only once on mount, with a longer delay
   useEffect(() => {
     // Avoid running on server
-    if (typeof window === "undefined" || !isMounted) return;
-    
+    if (typeof window === "undefined" || !isMounted) return
+
     // Prevent double initialization
-    if (initializedRef.current) return;
-    initializedRef.current = true;
-    
-    let mounted = true;
-    
+    if (initializedRef.current) return
+    initializedRef.current = true
+
+    let mounted = true
+
     // Delay initialization to ensure the page loads first
     const initTimer = setTimeout(() => {
       try {
-        const props = propsRef.current;
-        const newElements: FloatingElement[] = [];
+        const props = propsRef.current
+        const newElements: FloatingElement[] = []
 
         // Create fewer elements to start
-        const initialElements = Math.min(props.count, 5);
+        const initialElements = Math.min(props.count, 5)
         for (let i = 0; i < initialElements; i++) {
           newElements.push({
             id: i,
@@ -102,17 +102,17 @@ export default function FloatingElements({
             opacity: 0.1 + Math.random() * 0.3,
             blur: 10 + Math.random() * 30,
             delay: Math.random() * 2, // Add random delay for each element (0-2s)
-          });
+          })
         }
 
         if (mounted) {
-          setElements(newElements);
-          
+          setElements(newElements)
+
           // Add the rest of the elements after a delay
           if (initialElements < props.count) {
             setTimeout(() => {
               if (mounted) {
-                const restElements: FloatingElement[] = [];
+                const restElements: FloatingElement[] = []
                 for (let i = initialElements; i < props.count; i++) {
                   restElements.push({
                     id: i,
@@ -124,23 +124,23 @@ export default function FloatingElements({
                     opacity: 0.1 + Math.random() * 0.3,
                     blur: 10 + Math.random() * 30,
                     delay: Math.random() * 2,
-                  });
+                  })
                 }
-                setElements(prev => [...prev, ...restElements]);
+                setElements((prev) => [...prev, ...restElements])
               }
-            }, 1000);
+            }, 1000)
           }
         }
       } catch (error) {
-        console.error("FloatingElements init error:", error);
+        console.error("FloatingElements init error:", error)
       }
-    }, 500); // Longer delay for better initial rendering
-    
+    }, 500) // Longer delay for better initial rendering
+
     return () => {
-      mounted = false;
-      clearTimeout(initTimer);
-    };
-  }, [isMounted]); // Run when component is mounted
+      mounted = false
+      clearTimeout(initTimer)
+    }
+  }, [isMounted]) // Run when component is mounted
 
   // Always render a container regardless of initialization state
   return (
@@ -162,5 +162,5 @@ export default function FloatingElements({
         />
       ))}
     </div>
-  );
+  )
 }

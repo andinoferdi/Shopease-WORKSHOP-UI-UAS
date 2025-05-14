@@ -1,6 +1,6 @@
-import ProductFilters from "@/components/products/ProductFilters";
-import ProductGrid from "@/components/products/ProductGrid";
-import { ProductSorter } from "@/components/products/ProductSorter";
+import ProductFilters from "@/components/products/ProductFilters"
+import ProductGrid from "@/components/products/ProductGrid"
+import { ProductSorter } from "@/components/products/ProductSorter"
 
 export default function ProductCatalog() {
   return (
@@ -22,5 +22,5 @@ export default function ProductCatalog() {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,53 +1,37 @@
-import type React from "react";
-import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
-import AnimationProvider from "../components/providers/AnimationProvider";
-import PageTransition from "../components/effects/PageTransition";
-import ScrollProgress from "../components/effects/ScrollProgress";
-import MouseFollowEffect from "../components/effects/MouseFollowEffect";
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import Header from "@/components/layout/Header"
+import Footer from "@/components/layout/Footer"
+import { CartProvider } from "@/context/CartContext"
+import { ToastProvider } from "@/context/ToastContext"
 
-const poppins = Poppins({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-poppins",
-});
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ShopEase - Modern E-commerce",
-  description: "A modern e-commerce platform with everything you need",
-};
-
-export const viewport: Viewport = {
-  themeColor: "#0F766E",
-};
+  title: "ShopEase - Modern E-commerce Platform",
+  description: "A modern e-commerce platform with beautiful UI effects",
+}
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="en" className={poppins.variable}>
-      <body className="bg-gray-50 text-gray-900 font-poppins">
-        <AnimationProvider>
-          <MouseFollowEffect>
+    <html lang="en">
+      <body className={inter.className}>
+        <ToastProvider>
+          <CartProvider>
             <div className="flex min-h-screen flex-col">
-              <ScrollProgress />
               <Header />
-              <div className="flex-1">
-                <PageTransition>{children}</PageTransition>
-              </div>
-              <div className="md:ml-0">
-                <Footer />
-              </div>
+              <main className="flex-1">{children}</main>
+              <Footer />
             </div>
-          </MouseFollowEffect>
-        </AnimationProvider>
+          </CartProvider>
+        </ToastProvider>
       </body>
     </html>
-  );
+  )
 }

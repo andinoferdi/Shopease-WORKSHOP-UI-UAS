@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react"
 
 interface ScrollRevealProps {
-  children: ReactNode;
-  className?: string;
-  threshold?: number;
-  delay?: number;
-  duration?: number;
-  distance?: number;
-  direction?: "up" | "down" | "left" | "right";
-  once?: boolean;
+  children: ReactNode
+  className?: string
+  threshold?: number
+  delay?: number
+  duration?: number
+  distance?: number
+  direction?: "up" | "down" | "left" | "right"
+  once?: boolean
 }
 
 export default function ScrollReveal({
@@ -23,79 +23,79 @@ export default function ScrollReveal({
   direction = "up",
   once = true,
 }: ScrollRevealProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
   // Handle mount state to prevent hydration issues
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
-    if (!isMounted || typeof window === 'undefined') return;
-    
+    if (!isMounted || typeof window === "undefined") return
+
     try {
       // Only create observer if IntersectionObserver is available
-      if (!('IntersectionObserver' in window)) {
-        setIsVisible(true); // Fallback to visible if not supported
-        return;
+      if (!("IntersectionObserver" in window)) {
+        setIsVisible(true) // Fallback to visible if not supported
+        return
       }
-      
+
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
             setTimeout(() => {
-              setIsVisible(true);
-            }, delay);
+              setIsVisible(true)
+            }, delay)
 
             if (once) {
-              observer.unobserve(entry.target);
+              observer.unobserve(entry.target)
             }
           } else if (!once) {
-            setIsVisible(false);
+            setIsVisible(false)
           }
         },
-        { threshold }
-      );
+        { threshold },
+      )
 
-      const currentRef = ref.current;
+      const currentRef = ref.current
 
       if (currentRef) {
-        observer.observe(currentRef);
+        observer.observe(currentRef)
       }
 
       return () => {
         if (currentRef) {
-          observer.unobserve(currentRef);
+          observer.unobserve(currentRef)
         }
-        observer.disconnect();
-      };
+        observer.disconnect()
+      }
     } catch (error) {
-      console.error("ScrollReveal error:", error);
-      setIsVisible(true); // Fallback to visible on error
+      console.error("ScrollReveal error:", error)
+      setIsVisible(true) // Fallback to visible on error
     }
-  }, [threshold, delay, once, isMounted]);
+  }, [threshold, delay, once, isMounted])
 
   // Set initial transform based on direction
   const getInitialTransform = () => {
     switch (direction) {
       case "up":
-        return `translateY(${distance}px)`;
+        return `translateY(${distance}px)`
       case "down":
-        return `translateY(-${distance}px)`;
+        return `translateY(-${distance}px)`
       case "left":
-        return `translateX(${distance}px)`;
+        return `translateX(${distance}px)`
       case "right":
-        return `translateX(-${distance}px)`;
+        return `translateX(-${distance}px)`
       default:
-        return `translateY(${distance}px)`;
+        return `translateY(${distance}px)`
     }
-  };
+  }
 
   // During server-side rendering or before hydration, render without animation
   if (!isMounted) {
-    return <div className={className}>{children}</div>;
+    return <div className={className}>{children}</div>
   }
 
   return (
@@ -110,5 +110,5 @@ export default function ScrollReveal({
     >
       {children}
     </div>
-  );
+  )
 }

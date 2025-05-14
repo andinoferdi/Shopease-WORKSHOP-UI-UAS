@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react"
 
 interface GlowingButtonProps {
-  children: React.ReactNode;
-  className?: string;
-  glowColor?: string;
-  onClick?: () => void;
+  children: React.ReactNode
+  className?: string
+  glowColor?: string
+  onClick?: () => void
 }
 
 export default function GlowingButton({
@@ -17,43 +17,43 @@ export default function GlowingButton({
   glowColor = "rgba(20, 184, 166, 0.6)",
   onClick,
 }: GlowingButtonProps) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+      setIsMobile(window.innerWidth < 768)
+    }
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
 
     return () => {
-      window.removeEventListener("resize", checkMobile);
-    };
-  }, []);
+      window.removeEventListener("resize", checkMobile)
+    }
+  }, [])
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isMobile || !buttonRef.current) return;
+    if (isMobile || !buttonRef.current) return
 
-    const rect = buttonRef.current.getBoundingClientRect();
+    const rect = buttonRef.current.getBoundingClientRect()
 
     // Calculate mouse position relative to button
     setPosition({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
-    });
-  };
+    })
+  }
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+    setIsHovered(true)
+  }
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+    setIsHovered(false)
+  }
 
   return (
     <button
@@ -84,5 +84,5 @@ export default function GlowingButton({
       {/* Button content */}
       <div className="relative z-10">{children}</div>
     </button>
-  );
+  )
 }

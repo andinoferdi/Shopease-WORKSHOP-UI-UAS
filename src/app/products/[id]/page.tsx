@@ -1,10 +1,18 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowLeft } from "lucide-react"
+import { getProductById, getRelatedProducts } from "@/lib/data/products"
+import AddToCartButton from "@/components/products/AddToCartButton"
+import { notFound } from "next/navigation"
 
-// @ts-expect-error - Types intentionally removed as requested
-export default function ProductDetail({ params }) {
-  const { id } = params;
+export default function ProductDetail({ params }: { params: { id: string } }) {
+  const product = getProductById(params.id)
+
+  if (!product) {
+    notFound()
+  }
+
+  const relatedProducts = getRelatedProducts(params.id, 4)
 
   return (
     <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-10 py-8">
@@ -19,26 +27,15 @@ export default function ProductDetail({ params }) {
       <div className="grid gap-8 md:grid-cols-2">
         <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
           <Image
-            src="/placeholder.svg?height=600&width=600"
-            alt="Product image"
+            src={product.images[0] || "/placeholder.svg?height=600&width=600"}
+            alt={product.name}
             fill
             className="object-cover"
           />
         </div>
 
         <div>
-          <h1 className="mb-4 text-3xl font-bold text-gray-900">
-            {
-              [
-                "Premium Wireless Headphones",
-                "Smart Watch",
-                "Bluetooth Speaker",
-                "Laptop Backpack",
-                "Fitness Tracker",
-                "Coffee Maker",
-              ][Number(id) % 6]
-            }
-          </h1>
+          <h1 className="mb-4 text-3xl font-bold text-gray-900">{product.name}</h1>
 
           <div className="mb-4">
             <div className="mb-2 flex items-center">
@@ -46,9 +43,7 @@ export default function ProductDetail({ params }) {
                 {[...Array(5)].map((_, i) => (
                   <svg
                     key={i}
-                    className={`h-5 w-5 ${
-                      i < 4 ? "text-yellow-400" : "text-gray-300"
-                    }`}
+                    className={`h-5 w-5 ${i < Math.floor(product.rating) ? "text-yellow-400" : "text-gray-300"}`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                   >
@@ -56,36 +51,29 @@ export default function ProductDetail({ params }) {
                   </svg>
                 ))}
               </div>
-              <span className="ml-2 text-sm text-gray-500">
-                {Math.floor(Math.random() * 100) + 50} reviews
-              </span>
+              <span className="ml-2 text-sm text-gray-500">{product.reviews} reviews</span>
             </div>
           </div>
 
           <div className="mb-6">
-            <p className="mb-4 text-3xl font-bold text-gray-900">
-              ${(99.99 + Number(id) * 10).toFixed(2)}
-            </p>
+            {product.discountPrice ? (
+              <div className="flex items-center">
+                <p className="text-3xl font-bold text-gray-900">${product.discountPrice.toFixed(2)}</p>
+                <p className="ml-2 text-lg text-gray-500 line-through">${product.price.toFixed(2)}</p>
+              </div>
+            ) : (
+              <p className="text-3xl font-bold text-gray-900">${product.price.toFixed(2)}</p>
+            )}
             <p className="text-green-600">In stock and ready to ship</p>
           </div>
 
           <div className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              Description
-            </h2>
-            <p className="text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              euismod, diam vel tincidunt dapibus, massa urna condimentum odio,
-              vel finibus tellus nunc vel sem. Aenean vulputate eleifend enim,
-              ac tempor lorem vestibulum vitae. Donec bibendum consectetur
-              magna, et ullamcorper sapien dapibus non.
-            </p>
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">Description</h2>
+            <p className="text-gray-700">{product.description}</p>
           </div>
 
           <div className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              Features
-            </h2>
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">Features</h2>
             <ul className="list-inside list-disc space-y-2 text-gray-700">
               <li>Premium quality materials</li>
               <li>Innovative design for maximum comfort</li>
@@ -96,16 +84,12 @@ export default function ProductDetail({ params }) {
           </div>
 
           <div className="flex space-x-4">
-            <button className="flex-1 rounded-md bg-teal-700 px-6 py-3 text-white hover:bg-teal-800">
-              Add to Cart
-            </button>
+            <AddToCartButton
+              productId={product.id}
+              className="flex-1 rounded-md bg-teal-700 px-6 py-3 text-white hover:bg-teal-800"
+            />
             <button className="rounded-md border border-gray-300 bg-white px-6 py-3 text-gray-700 hover:bg-gray-50">
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -119,41 +103,30 @@ export default function ProductDetail({ params }) {
       </div>
 
       <div className="mt-12">
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">
-          Related Products
-        </h2>
+        <h2 className="mb-6 text-2xl font-bold text-gray-900">Related Products</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[1, 2, 3, 4].map((relatedId) => (
+          {relatedProducts.map((relatedProduct) => (
             <Link
-              key={relatedId}
-              href={`/products/${relatedId}`}
+              key={relatedProduct.id}
+              href={`/products/${relatedProduct.id}`}
               className="group rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md"
             >
               <div className="relative mb-4 aspect-square overflow-hidden rounded-md bg-gray-100">
                 <Image
-                  src="/placeholder.svg?height=300&width=300"
-                  alt="Product image"
+                  src={relatedProduct.images[0] || "/placeholder.svg?height=300&width=300"}
+                  alt={relatedProduct.name}
                   fill
                   className="object-cover transition-transform group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-lg font-medium text-gray-900">
-                {
-                  [
-                    "Premium Wireless Headphones",
-                    "Smart Watch",
-                    "Bluetooth Speaker",
-                    "Laptop Backpack",
-                  ][relatedId - 1]
-                }
-              </h3>
+              <h3 className="text-lg font-medium text-gray-900">{relatedProduct.name}</h3>
               <p className="mt-2 text-lg font-bold text-gray-900">
-                ${(99.99 + relatedId * 10).toFixed(2)}
+                ${(relatedProduct.discountPrice || relatedProduct.price).toFixed(2)}
               </p>
             </Link>
           ))}
         </div>
       </div>
     </div>
-  );
+  )
 }
