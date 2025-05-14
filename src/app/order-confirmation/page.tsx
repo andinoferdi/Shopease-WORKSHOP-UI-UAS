@@ -47,7 +47,7 @@ export default function OrderConfirmationPage() {
         <div>
           <h2 className="mb-2 text-sm font-medium text-gray-700">Order Updates</h2>
           <p className="text-gray-600">
-            We'll send you shipping confirmation and tracking information to your email address.
+            We&apos;ll send you shipping confirmation and tracking information to your email address.
           </p>
         </div>
       </div>

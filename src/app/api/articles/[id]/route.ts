@@ -1,25 +1,23 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { getArticleById, getRelatedArticles } from "@/lib/data/articles"
+import { NextRequest, NextResponse } from "next/server"
+import { getProductById, getRelatedProducts } from "@/lib/data/products"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const id = Number.parseInt(params.id)
-
-  if (isNaN(id)) {
-    return NextResponse.json({ error: "Invalid article ID" }, { status: 400 })
-  }
-
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const article = getArticleById(id)
+    const { id } = await params
+    const product = getProductById(id)
 
-    if (!article) {
-      return NextResponse.json({ error: "Article not found" }, { status: 404 })
+    if (!product) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 })
     }
 
-    const relatedArticles = getRelatedArticles(id)
+    const relatedProducts = getRelatedProducts(id)
 
-    return NextResponse.json({ article, relatedArticles })
+    return NextResponse.json({ product, relatedProducts })
   } catch (error) {
-    console.error("Error fetching article:", error)
-    return NextResponse.json({ error: "Failed to fetch article" }, { status: 500 })
+    console.error("Error fetching product:", error)
+    return NextResponse.json({ error: "Failed to fetch product" }, { status: 500 })
   }
 }

@@ -1,52 +1,52 @@
-// Define core data types for the application
+// Product types
 export interface Product {
   id: string
   name: string
   description: string
   price: number
   discountPrice?: number
-  images: string[]
   category: string
   tags: string[]
-  stock: number
+  image: string
   rating: number
-  reviews: number
-  featured: boolean
+  stock: number
   createdAt: string
   updatedAt: string
 }
 
+// Article types
 export interface Article {
   id: string
   title: string
-  slug: string
-  excerpt: string
   content: string
-  coverImage: string
-  author: {
-    name: string
-    avatar: string
-  }
+  excerpt: string
+  author: string
   category: string
   tags: string[]
-  publishedAt: string
-  readTime: number
+  image: string
+  createdAt: string
+  updatedAt: string
 }
 
+// User types
 export interface User {
   id: string
   name: string
   email: string
   avatar: string
-  role: "admin" | "customer"
+  role: UserRole
   createdAt: string
-  lastLogin: string
-  status: "active" | "inactive"
+  updatedAt: string
 }
 
+export enum UserRole {
+  ADMIN = "ADMIN",
+  CUSTOMER = "CUSTOMER",
+}
+
+// Cart types
 export interface CartItem {
   id: string
-  productId: string
   name: string
   price: number
   discountPrice?: number
@@ -54,40 +54,35 @@ export interface CartItem {
   image: string
 }
 
+// Order types
 export interface Order {
   id: string
+  orderNumber: string
   userId: string
-  items: {
-    id: string
-    productId: string
-    name: string
-    price: number
-    discountPrice?: number
-    quantity: number
-    image: string
-  }[]
-  total: number
-  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled"
-  paymentMethod: "credit_card" | "paypal" | "bank_transfer"
-  shippingAddress: {
-    name: string
-    address: string
-    city: string
-    state: string
-    zipCode: string
-    country: string
-  }
+  items: CartItem[]
+  totalAmount: number
+  status: OrderStatus
+  shippingAddress: string
+  paymentMethod: string
   createdAt: string
   updatedAt: string
 }
 
+export enum OrderStatus {
+  PROCESSING = "Processing",
+  SHIPPED = "Shipped",
+  DELIVERED = "Delivered",
+  CANCELLED = "Cancelled",
+}
+
+// Dashboard stats
 export interface DashboardStats {
   totalSales: number
   totalOrders: number
   totalCustomers: number
   totalProducts: number
   recentOrders: Order[]
-  topSellingProducts: {
+  topProducts: {
     id: string
     name: string
     sales: number

@@ -1,127 +1,188 @@
-import { getOrders } from "@/lib/data/orders";
-import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
+"use client"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { getOrders } from "@/lib/actions/order-actions"
+import { type Order, OrderStatus } from "@/types"
+import { formatDistanceToNow } from "date-fns"
+import { ShoppingBag } from "lucide-react"
+import Image from "next/image"
 
 export default function TransactionsPage() {
-  const orders = getOrders();
+  const [orders, setOrders] = useState<Order[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const ordersData = await getOrders()
+        setOrders(ordersData)
+      } catch (error) {
+        console.error("Error fetching orders:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchOrders()
+  }, [])
+
+  // Function to get status badge color
+  const getStatusColor = (status: OrderStatus) => {
+    switch (status) {
+      case OrderStatus.DELIVERED:
+        return "bg-green-100 text-green-800"
+      case OrderStatus.SHIPPED:
+        return "bg-blue-100 text-blue-800"
+      case OrderStatus.PROCESSING:
+        return "bg-yellow-100 text-yellow-800"
+      case OrderStatus.CANCELLED:
+        return "bg-red-100 text-red-800"
+      default:
+        return "bg-gray-100 text-gray-800"
+    }
+  }
+
+  // Function to format date
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString)
+      return `${date.toLocaleDateString()} (about ${formatDistanceToNow(date, { addSuffix: true })})`
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      return dateString
+    }
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Order History</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Order History</h1>
         <Link
           href="/products"
-          className="rounded-md bg-teal-700 px-4 py-2 text-sm font-medium text-white hover:bg-teal-800"
+          className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
         >
           Continue Shopping
         </Link>
       </div>
 
-      {orders.length === 0 ? (
-        <div className="rounded-lg border border-gray-200 bg-white p-8 text-center shadow-sm">
-          <h2 className="mb-2 text-xl font-medium">No orders yet</h2>
-          <p className="mb-6 text-gray-600">
-            You haven&apos;t placed any orders yet.
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      ) : orders.length === 0 ? (
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <div className="flex justify-center mb-4">
+            <ShoppingBag className="h-16 w-16 text-gray-400" />
+          </div>
+          <h2 className="text-2xl font-semibold mb-2">No orders yet</h2>
+          <p className="text-gray-600 mb-6">
+            You haven&apos;t placed any orders yet. Start shopping to see your order history.
           </p>
           <Link
             href="/products"
-            className="inline-block rounded-md bg-teal-700 px-6 py-2 text-white hover:bg-teal-800"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition duration-200"
           >
-            Start Shopping
+            Browse Products
           </Link>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                >
-                  Order ID
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                >
-                  Date
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                >
-                  Status
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                >
-                  Total
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                >
-                  Items
-                </th>
-                <th scope="col" className="relative px-6 py-3">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <span className="font-medium text-teal-700">
-                      #{order.id.substring(0, 8)}
+        <div className="space-y-8">
+          {orders.map((order) => (
+            <div key={order.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="p-6 border-b border-gray-200">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Order placed</p>
+                    <p className="font-medium">{formatDate(order.createdAt)}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Order ID</p>
+                    <p className="font-medium text-blue-600">{order.orderNumber}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500">Total</p>
+                    <p className="font-medium">${order.totalAmount.toFixed(2)}</p>
+                  </div>
+                  <div className="flex md:justify-end items-start">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                      {order.status}
                     </span>
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                    <div>{new Date(order.createdAt).toLocaleDateString()}</div>
-                    <div className="text-xs text-gray-400">
-                      {formatDistanceToNow(new Date(order.createdAt), {
-                        addSuffix: true,
-                      })}
+                  </div>
+                </div>
+                <div className="flex justify-end mt-4">
+                  <Link
+                    href={`/order-details/${order.id}`}
+                    className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+                  >
+                    View Details
+                  </Link>
+                </div>
+              </div>
+
+              <div className="p-6">
+                <h3 className="font-medium mb-4">Items in this order</h3>
+                <div className="space-y-6">
+                  {order.items.map((item) => (
+                    <div
+                      key={`${order.id}-${item.id}`}
+                      className="flex flex-col md:flex-row md:items-center justify-between"
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                          <Image
+                            src={item.image || "/placeholder.svg"}
+                            alt={item.name}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="font-medium">{item.name}</h4>
+                          <p className="text-sm text-gray-500">
+                            Qty: {item.quantity}{" "}
+                            {item.discountPrice ? (
+                              <span className="ml-2">
+                                <span className="line-through text-gray-400">${item.price.toFixed(2)}</span>
+                                <span className="ml-1">${item.discountPrice.toFixed(2)}</span>
+                              </span>
+                            ) : (
+                              <span className="ml-2">${item.price.toFixed(2)}</span>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between mt-4 md:mt-0">
+                        <div className="md:text-right">
+                          <p className="font-medium">
+                            ${((item.discountPrice || item.price) * item.quantity).toFixed(2)}
+                          </p>
+                          <Link
+                            href={`/products/${item.id}`}
+                            className="text-teal-600 hover:text-teal-800 text-sm font-medium"
+                          >
+                            Buy Again
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <span
-                      className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                        order.status === "delivered"
-                          ? "bg-green-100 text-green-800"
-                          : order.status === "processing"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : order.status === "shipped"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}
-                    >
-                      {order.status.charAt(0).toUpperCase() +
-                        order.status.slice(1)}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-900">
-                    ${order.total.toFixed(2)}
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                    {order.items.length} items
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                    <Link
-                      href={`/order-details/${order.id}`}
-                      className="text-teal-600 hover:text-teal-900"
-                    >
-                      View Details
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  ))}
+                </div>
+              </div>
+
+              <div className="px-6 py-4 bg-gray-50 flex flex-col md:flex-row justify-between text-sm">
+                <p>
+                  Shipped to: <span className="font-medium">{order.shippingAddress.split(",")[0]}</span>
+                </p>
+                <p>
+                  Payment Method: <span className="font-medium">{order.paymentMethod}</span>
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
-  );
+  )
 }

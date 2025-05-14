@@ -10,7 +10,7 @@ export const getDashboardStats = (): DashboardStats => {
   const customers = getCustomerUsers()
 
   // Calculate total sales
-  const totalSales = recentOrders.reduce((sum, order) => sum + order.total, 0)
+  const totalSales = recentOrders.reduce((sum, order) => sum + order.totalAmount, 0)
 
   // Generate top selling products
   const topSellingProducts = [
@@ -71,7 +71,7 @@ export const getDashboardStats = (): DashboardStats => {
     totalCustomers: customers.length,
     totalProducts: products.length,
     recentOrders,
-    topSellingProducts,
+    topProducts: topSellingProducts,
     salesByCategory,
     revenueByMonth,
   }

@@ -5,42 +5,10 @@ import { getDashboardStats } from "@/lib/data/stats"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
 import { ArrowUp, ArrowDown, DollarSign, ShoppingBag, Users, Package } from "lucide-react"
 import Link from "next/link"
-
-// Define types for dashboard data
-interface OrderAddress {
-  name: string
-}
-
-interface Order {
-  id: string
-  shippingAddress: OrderAddress
-  createdAt: string
-  total: number
-  status: 'delivered' | 'shipped' | 'processing' | 'cancelled' | string
-}
-
-interface MonthlyRevenue {
-  month: string
-  revenue: number
-}
-
-interface CategorySales {
-  category: string
-  sales: number
-}
-
-interface DashboardStats {
-  totalSales: number
-  totalOrders: number
-  totalCustomers: number
-  totalProducts: number
-  revenueByMonth: MonthlyRevenue[]
-  salesByCategory: CategorySales[]
-  recentOrders: Order[]
-}
+import { DashboardStats as DashboardStatsType, OrderStatus } from "@/types"
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<DashboardStats | null>(null)
+  const [stats, setStats] = useState<DashboardStatsType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -91,7 +59,7 @@ export default function AdminDashboard() {
             </div>
             <div>
               <p className="text-sm font-medium text-gray-500">Total Sales</p>
-              <h3 className="text-2xl font-bold">${stats.totalSales.toFixed(2)}</h3>
+              <h3 className="text-2xl font-bold">${stats.totalSales?.toFixed(2) || '0.00'}</h3>
             </div>
           </div>
           <div className="mt-4 flex items-center text-sm">
@@ -194,7 +162,7 @@ export default function AdminDashboard() {
                   nameKey="category"
                   label={({ name, percent }: { name: string, percent: number }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                 >
-                  {stats.salesByCategory.map((entry: CategorySales, index: number) => (
+                  {stats.salesByCategory.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -209,7 +177,7 @@ export default function AdminDashboard() {
       <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-medium">Recent Orders</h2>
-          <Link href="/admin/orders" className="text-sm font-medium text-teal-700 hover:text-teal-800">
+          <Link href="/admin/transactions" className="text-sm font-medium text-teal-700 hover:text-teal-800">
             View All
           </Link>
         </div>
@@ -250,35 +218,33 @@ export default function AdminDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
-              {stats.recentOrders.map((order: Order) => (
-                <tr key={order.id}>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">{order.id}</div>
+              {stats.recentOrders.map((order) => (
+                <tr key={order.id} className="hover:bg-gray-50">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                    {order.orderNumber}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <div className="text-sm text-gray-900">{order.shippingAddress.name}</div>
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                    {order.shippingAddress.split(',')[0]}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <div className="text-sm text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</div>
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                    {new Date(order.createdAt).toLocaleDateString()}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
-                    <div className="text-sm text-gray-900">${order.total.toFixed(2)}</div>
+                  <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                    ${order.totalAmount.toFixed(2)}
                   </td>
-                  <td className="whitespace-nowrap px-6 py-4">
+                  <td className="whitespace-nowrap px-6 py-4 text-sm">
                     <span
-                      className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                        order.status === "delivered"
+                      className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold leading-5 ${
+                        order.status === OrderStatus.DELIVERED
                           ? "bg-green-100 text-green-800"
-                          : order.status === "shipped"
-                            ? "bg-blue-100 text-blue-800"
-                            : order.status === "processing"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : order.status === "cancelled"
-                                ? "bg-red-100 text-red-800"
-                                : "bg-gray-100 text-gray-800"
+                          : order.status === OrderStatus.SHIPPED
+                          ? "bg-blue-100 text-blue-800"
+                          : order.status === OrderStatus.PROCESSING
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
                       }`}
                     >
-                      {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                      {order.status}
                     </span>
                   </td>
                 </tr>

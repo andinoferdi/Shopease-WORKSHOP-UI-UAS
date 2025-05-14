@@ -1,14 +1,16 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { getProductById, getRelatedProducts } from "@/lib/data/products"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const id = Number.parseInt(params.id)
+interface RouteParams {
+  id: string
+}
 
-  if (isNaN(id)) {
-    return NextResponse.json({ error: "Invalid product ID" }, { status: 400 })
-  }
-
+export async function GET(
+  request: NextRequest,
+  context: { params: RouteParams }
+): Promise<NextResponse> {
   try {
+    const id = context.params.id
     const product = getProductById(id)
 
     if (!product) {

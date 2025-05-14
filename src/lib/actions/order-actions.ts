@@ -1,43 +1,74 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createOrder as createOrderData, updateOrderStatus as updateOrderStatusData } from "../data/orders"
-import { clearCart } from "../data/cart"
+import { clearCart, createCart } from "../data/cart"
 import type { Order } from "@/types"
+import { OrderStatus, type CartItem } from "@/types"
+import { orders } from "@/lib/data/orders"
 
-export async function createOrder(orderData: Omit<Order, "id" | "createdAt" | "updatedAt">) {
-  try {
-    const newOrder = createOrderData(orderData)
-
-    // Clear the cart after successful order creation
-    clearCart()
-
-    revalidatePath("/orders")
-    revalidatePath("/admin/orders")
-    revalidatePath("/admin/dashboard")
-
-    return { success: true, data: newOrder }
-  } catch (error) {
-    console.error("Error creating order:", error)
-    return { success: false, error: "Failed to create order" }
-  }
+// Get all orders
+export async function getOrders(): Promise<Order[]> {
+  return orders
 }
 
-export async function updateOrderStatus(orderId: string, status: Order["status"]) {
-  try {
-    const updatedOrder = updateOrderStatusData(orderId, status)
+// Get order by ID
+export async function getOrderById(id: string): Promise<Order | null> {
+  const order = orders.find((order) => order.id === id)
+  return order || null
+}
 
-    if (!updatedOrder) {
-      return { success: false, error: "Order not found" }
-    }
-
-    revalidatePath("/orders")
-    revalidatePath("/admin/orders")
-    revalidatePath("/admin/dashboard")
-
-    return { success: true, data: updatedOrder }
-  } catch (error) {
-    console.error("Error updating order status:", error)
-    return { success: false, error: "Failed to update order status" }
+// Create a new order
+export async function createOrder(
+  items: CartItem[],
+  totalAmount: number,
+  shippingAddress: string,
+  paymentMethod: string,
+): Promise<Order> {
+  const newOrder: Order = {
+    id: `ORD-${orders.length + 1}`.padStart(7, "0"),
+    orderNumber: `#ORD-${(orders.length + 1).toString().padStart(3, "0")}`,
+    userId: "user-1", // In a real app, this would be the actual user ID
+    items: items.map((item) => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      discountPrice: item.discountPrice,
+      quantity: item.quantity,
+      image: item.image,
+    })),
+    totalAmount,
+    status: OrderStatus.PROCESSING,
+    shippingAddress,
+    paymentMethod,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   }
+
+  // In a real app, this would save to a database
+  orders.unshift(newOrder) // Add to the beginning of the array
+
+  // Clear the cart after successful order creation
+  clearCart(createCart())
+
+  revalidatePath("/orders")
+  revalidatePath("/admin/orders")
+  revalidatePath("/admin/dashboard")
+  revalidatePath("/transactions")
+
+  return newOrder
+}
+
+// Update order status
+export async function updateOrderStatus(id: string, status: OrderStatus): Promise<Order | null> {
+  const orderIndex = orders.findIndex((order) => order.id === id)
+  if (orderIndex === -1) return null
+
+  orders[orderIndex].status = status
+  orders[orderIndex].updatedAt = new Date().toISOString()
+
+  revalidatePath("/orders")
+  revalidatePath("/admin/orders")
+  revalidatePath("/admin/dashboard")
+
+  return orders[orderIndex]
 }

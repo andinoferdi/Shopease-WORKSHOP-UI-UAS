@@ -40,7 +40,7 @@ export default function CartPage() {
       <div className="mx-auto max-w-6xl px-4 py-16 text-center">
         <ShoppingBag className="mx-auto mb-4 h-16 w-16 text-gray-300" />
         <h1 className="mb-4 text-2xl font-bold">Your cart is empty</h1>
-        <p className="mb-8 text-gray-600">Looks like you haven't added any products to your cart yet.</p>
+        <p className="mb-8 text-gray-600">Looks like you haven&apos;t added any products to your cart yet.</p>
         <Link
           href="/products"
           className="inline-flex items-center rounded-md bg-teal-700 px-6 py-3 text-white hover:bg-teal-800"
@@ -77,7 +77,7 @@ export default function CartPage() {
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                              <Link href={`/products/${item.productId}`}>{item.name}</Link>
+                              <Link href={`/products/${item.id}`}>{item.name}</Link>
                             </h3>
                             <p className="ml-4">${((item.discountPrice || item.price) * item.quantity).toFixed(2)}</p>
                           </div>

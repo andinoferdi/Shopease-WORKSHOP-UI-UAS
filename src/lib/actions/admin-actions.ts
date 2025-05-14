@@ -4,6 +4,7 @@ import { getUsers, getUserById, searchUsers } from "../data/users"
 import { getOrders, getOrdersByStatus } from "../data/orders"
 import { getProducts } from "../data/products"
 import { getArticles } from "../data/articles"
+import { OrderStatus } from "@/types"
 
 export async function fetchDashboardStats() {
   try {
@@ -62,7 +63,7 @@ export async function fetchAdminOrders() {
 
 export async function fetchOrdersByStatus(status: string) {
   try {
-    const orders = getOrdersByStatus(status as any)
+    const orders = getOrdersByStatus(status as OrderStatus)
     return { success: true, data: orders }
   } catch (error) {
     console.error("Error fetching orders by status:", error)
